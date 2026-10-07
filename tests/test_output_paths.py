@@ -1,6 +1,8 @@
 import io
 import json
 import os
+import subprocess
+import sys
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
@@ -13,6 +15,52 @@ from aibenchmark_esw.output_paths import validate_output_paths
 
 
 class TestOutputPaths(unittest.TestCase):
+    def test_existing_output_scan_fails_closed_when_protected_directory_cannot_be_scanned(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / "tasks"
+            root.mkdir()
+            output = Path(directory) / "report.json"
+            output.write_text("keep", encoding="utf-8")
+            with patch("aibenchmark_esw.output_paths.os.scandir", side_effect=PermissionError("denied")):
+                with self.assertRaisesRegex(ValueError, "Unable to scan protected input directory"):
+                    validate_output_paths([output], protected_roots=[root])
+            self.assertEqual(output.read_text(encoding="utf-8"), "keep")
+
+    def test_existing_output_scan_does_not_follow_directory_symlink_cycles(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / "tasks"
+            root.mkdir()
+            output = Path(directory) / "report.json"
+            output.write_text("keep", encoding="utf-8")
+            try:
+                (root / "cycle").symlink_to(root, target_is_directory=True)
+            except OSError:
+                self.skipTest("Symbolic link creation requires OS support or privileges")
+            script = (
+                "import sys; from pathlib import Path; "
+                "from aibenchmark_esw.output_paths import validate_output_paths; "
+                "validate_output_paths([Path(sys.argv[1])], protected_roots=[Path(sys.argv[2])])"
+            )
+            result = subprocess.run(
+                [sys.executable, "-c", script, str(output), str(root)],
+                capture_output=True, text=True, timeout=5,
+            )
+            self.assertEqual(result.returncode, 0, result.stderr)
+            self.assertEqual(output.read_text(encoding="utf-8"), "keep")
+
+    def test_existing_output_scan_protects_file_symlink_aliases(self):
+        with TemporaryDirectory() as directory:
+            root = Path(directory) / "tasks"
+            root.mkdir()
+            source = Path(directory) / "reference.c"
+            source.write_text("keep", encoding="utf-8")
+            try:
+                (root / "alias.c").symlink_to(source)
+            except OSError:
+                self.skipTest("Symbolic link creation requires OS support or privileges")
+            with self.assertRaisesRegex(ValueError, "overwrite an input"):
+                validate_output_paths([source], protected_roots=[root])
+
     def test_eval_cannot_replace_its_source_or_hard_link(self):
         with TemporaryDirectory() as directory:
             source = Path(directory) / "candidate.c"

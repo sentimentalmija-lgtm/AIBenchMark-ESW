@@ -2,11 +2,30 @@
 
 import os
 from pathlib import Path
+from typing import Iterator
 
 
 def _same_file(first, second):
     return first.resolve() == second.resolve() or (
         first.exists() and second.exists() and first.samefile(second))
+
+
+def _iter_protected_files(root: Path) -> Iterator[Path]:
+    directories = [root]
+    while directories:
+        directory = directories.pop()
+        try:
+            with os.scandir(directory) as entries:
+                for entry in entries:
+                    path = Path(entry.path)
+                    if entry.is_dir(follow_symlinks=False):
+                        directories.append(path)
+                    elif entry.is_file(follow_symlinks=True):
+                        yield path
+        except OSError as error:
+            raise ValueError(
+                f"Unable to scan protected input directory {directory}: {error}"
+            ) from error
 
 
 def validate_output_paths(outputs, protected_files=(), protected_roots=()):
@@ -20,7 +39,7 @@ def validate_output_paths(outputs, protected_files=(), protected_roots=()):
     inputs = [Path(path) for path in protected_files]
     # Existing output files may be hard links to inputs outside their root.
     if any(path.exists() for path in outputs):
-        inputs.extend(path for root in roots for path in root.rglob("*") if path.is_file())
+        inputs.extend(path for root in roots for path in _iter_protected_files(root))
     for index, path in enumerate(outputs):
         if path.is_dir():
             raise IsADirectoryError(f"Output must be a file: {path}")
