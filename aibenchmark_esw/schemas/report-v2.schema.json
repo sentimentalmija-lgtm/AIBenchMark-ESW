@@ -287,7 +287,8 @@
                   "disabled",
                   "not_run",
                   "completed",
-                  "failed"
+                  "failed",
+                  "timeout"
                 ]
               },
               "cppcheck_diagnostic": {

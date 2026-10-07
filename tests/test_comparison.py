@@ -115,14 +115,20 @@ class TestComparison(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "static_analysis"):
             compare_runs([first, second])
         second["metadata"]["static_analysis"] = dict(first["metadata"]["static_analysis"])
+        first["metadata"]["static_analysis"]["configuration"] = {"cppcheck_timeout_seconds": 30.0}
+        second["metadata"]["static_analysis"]["configuration"] = {"cppcheck_timeout_seconds": 60.0}
+        with self.assertRaisesRegex(ValueError, "static_analysis"):
+            compare_runs([first, second])
+        second["metadata"]["static_analysis"]["configuration"] = dict(
+            first["metadata"]["static_analysis"]["configuration"])
         for report in (first, second):
             for task in report["tasks"]:
                 task["safety_metrics"]["cppcheck_status"] = "completed"
-        second["tasks"][0]["safety_metrics"].update(cppcheck_status="failed", cppcheck_diagnostic="tool timed out")
+        second["tasks"][0]["safety_metrics"].update(cppcheck_status="timeout", cppcheck_diagnostic="tool timed out")
         comparison = compare_runs([first, second])
-        self.assertIn("cppcheck failed", render_comparison(comparison))
+        self.assertIn("cppcheck timed out", render_comparison(comparison))
         row = next(row for row in comparison["models"] if row["model"] == "two")
-        self.assertEqual(row["cppcheck_failed_tasks"], 1)
+        self.assertEqual(row["cppcheck_timeout_tasks"], 1)
         second["metadata"].pop("static_analysis")
         self.assertIn("static-analysis configuration/version is unknown", render_comparison(compare_runs([first, second])))
 

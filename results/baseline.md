@@ -7,13 +7,13 @@
 - **Overall AIBenchMark-ESW Score**: **100.00 / 100.0**
 
 ### Reproducibility
-- **Run (UTC)**: 2026-10-06T14:34:09.148619+00:00
+- **Run (UTC)**: 2026-10-07T10:53:26.285499+00:00
 - **Run status**: completed
-- **Benchmark / Python**: 0.1.0 / 3.11.15
-- **Compiler**: tcc / tcc version 0.9.27 (x86_64 Windows) (native)
+- **Benchmark / Python**: 0.1.0 / 3.14.4
+- **Compiler**: gcc / gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0 (-Os)
 - **Static analysis**: builtin / No cppcheck version recorded
 - **Dataset SHA-256**: `7560070a1f197ce704b41ad2114ce060af0bf89a932ea7349606bb56b8c8f765`
-- **Evaluator SHA-256**: `0252b55751695a93abbd94e00c38daee98d6b729e968502a04d8ec92bca901d1`
+- **Evaluator SHA-256**: `ba6088ac44b9d09a019c51105a79a8962795d925d5b6b36937065dcc6a0f535c`
 - **Source revision**: `Unavailable in installed distribution`
 - **Source had local changes**: None
 
@@ -30,11 +30,11 @@ Weights below are functional/memory/safety. Memory and safety contributions are 
 
 | Tier | Task ID | Standard | Weights | Compile | Tests Passed | Flash/RAM (B) | Safety | Score | Time |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| 1 | `tier1_crc16` | c99 | 60%/20%/20% | PASS | 6/6 | 361 / 0 | Err:0, Warn:0 | **100.0** | 0.18s |
-| 1 | `tier1_q15_math` | c99 | 60%/20%/20% | PASS | 16/16 | 270 / 0 | Err:0, Warn:0 | **100.0** | 0.18s |
-| 1 | `tier1_ring_buffer` | c99 | 60%/20%/20% | PASS | 9/9 | 1474 / 0 | Err:0, Warn:0 | **100.0** | 0.18s |
-| 2 | `tier2_cobs_codec` | c99 | 60%/20%/20% | PASS | 9/9 | 1186 / 0 | Err:0, Warn:0 | **100.0** | 0.20s |
-| 2 | `tier2_debounce_fsm` | c99 | 60%/20%/20% | PASS | 5/5 | 1134 / 0 | Err:0, Warn:0 | **100.0** | 0.18s |
-| 2 | `tier2_tick_timer` | c99 | 60%/20%/20% | PASS | 16/16 | 636 / 0 | Err:0, Warn:0 | **100.0** | 0.19s |
-| 3 | `tier3_i2c_sensor` | c99 | 60%/20%/20% | PASS | 11/11 | 830 / 0 | Err:0, Warn:0 | **100.0** | 0.19s |
-| 4 | `tier4_bitmask_fix` | c99 | 60%/20%/20% | PASS | 5/5 | 462 / 0 | Err:0, Warn:0 | **100.0** | 0.18s |
+| 1 | `tier1_crc16` | c99 | 60%/20%/20% | PASS | 6/6 | 696 / 0 | Err:0, Warn:0 | **100.0** | 0.26s |
+| 1 | `tier1_q15_math` | c99 | 60%/20%/20% | PASS | 16/16 | 237 / 0 | Err:0, Warn:0 | **100.0** | 0.26s |
+| 1 | `tier1_ring_buffer` | c99 | 60%/20%/20% | PASS | 9/9 | 567 / 0 | Err:0, Warn:0 | **100.0** | 0.29s |
+| 2 | `tier2_cobs_codec` | c99 | 60%/20%/20% | PASS | 9/9 | 549 / 0 | Err:0, Warn:0 | **100.0** | 0.30s |
+| 2 | `tier2_debounce_fsm` | c99 | 60%/20%/20% | PASS | 5/5 | 401 / 0 | Err:0, Warn:0 | **100.0** | 0.25s |
+| 2 | `tier2_tick_timer` | c99 | 60%/20%/20% | PASS | 16/16 | 302 / 0 | Err:0, Warn:0 | **100.0** | 0.32s |
+| 3 | `tier3_i2c_sensor` | c99 | 60%/20%/20% | PASS | 11/11 | 505 / 0 | Err:0, Warn:0 | **100.0** | 0.28s |
+| 4 | `tier4_bitmask_fix` | c99 | 60%/20%/20% | PASS | 5/5 | 291 / 0 | Err:0, Warn:0 | **100.0** | 0.25s |

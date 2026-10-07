@@ -115,6 +115,10 @@ def collect_run_metadata(tasks, executor, generation_settings=None, static_analy
     package_dir = Path(__file__).resolve().parent
     revision, dirty = _checkout_provenance(package_dir)
     execution_settings = getattr(executor, "execution_settings", None)
+    execution_settings = execution_settings() if callable(execution_settings) else None
+    if isinstance(execution_settings, dict):
+        execution_settings = {**execution_settings,
+                              "static_analysis_timeout_seconds": analyzer.cppcheck_timeout_seconds}
     return {
         "run_id": uuid.uuid4().hex,
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -142,5 +146,5 @@ def collect_run_metadata(tasks, executor, generation_settings=None, static_analy
                            "safety_error_penalty": SAFETY_ERROR_PENALTY,
                            "safety_warning_penalty": SAFETY_WARNING_PENALTY,
                            "tasks": {task.id: {"weights": asdict(task.weights), "limits": asdict(task.limits)} for task in tasks}},
-        "execution_settings": execution_settings() if callable(execution_settings) else None,
+        "execution_settings": execution_settings,
     }

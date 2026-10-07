@@ -278,7 +278,9 @@ class BenchmarkReporter:
         warnings = []
         for result in results:
             status = result.safety_metrics.cppcheck_status
-            if status == "failed":
+            if status == "timeout":
+                warnings.append(f"{result.task_id}: cppcheck timed out; safety score uses built-in rules only.")
+            elif status == "failed":
                 warnings.append(f"{result.task_id}: cppcheck failed; safety score uses built-in rules only.")
             elif result.compiled and result.test_result.completed and status in (None, "not_run"):
                 warnings.append(f"{result.task_id}: static-analysis coverage was not recorded or did not run.")

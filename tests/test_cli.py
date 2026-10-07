@@ -25,7 +25,7 @@ class TestCLI(unittest.TestCase):
             solutions = Path(directory) / "solutions"
             args = cli.build_parser().parse_args(["run", "--model", "anthropic/mock", "--tasks", "tier1_crc16",
                 "--max-tokens", "2048", "--request-timeout", "10", "--output", str(report),
-                "--save-solutions", str(solutions)])
+                "--static-analysis-timeout", "12.5", "--save-solutions", str(solutions)])
             with patch.dict("sys.modules", {"litellm": provider}), redirect_stdout(io.StringIO()):
                 self.assertEqual(cli.cmd_run(args), 0)
             data = json.loads(report.read_text(encoding="utf-8"))
@@ -35,8 +35,23 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(restored[0].generation["max_tokens"], 2048)
         self.assertEqual(data["schema_version"], 2)
         self.assertEqual(data["metadata"]["generation_settings"]["max_tokens"], 2048)
+        self.assertEqual(data["metadata"]["execution_settings"]["static_analysis_timeout_seconds"], 12.5)
+        self.assertEqual(data["metadata"]["static_analysis"]["configuration"]["cppcheck_timeout_seconds"], 12.5)
+        self.assertEqual(data["metadata"]["run_options"]["static_analysis_timeout"], 12.5)
         self.assertEqual(len(restored[0].provenance["candidate_sha256"]), 64)
         self.assertEqual(len(restored[0].provenance["prompt_sha256"]), 64)
+
+    def test_run_uses_configured_static_analysis_timeout(self):
+        with TemporaryDirectory() as directory:
+            report = Path(directory) / "run.json"
+            args = cli.build_parser().parse_args(["run", "--model", "baseline", "--tasks", "tier1_crc16",
+                "--static-analysis-timeout", "12.5", "--output", str(report)])
+            with patch.dict("os.environ", {"AIBENCHMARK_ESW_CPPCHECK": "off"}), \
+                    patch("aibenchmark_esw.cli.evaluate_task", wraps=cli.evaluate_task) as evaluate, \
+                    redirect_stdout(io.StringIO()):
+                self.assertEqual(cli.cmd_run(args), 0)
+        analyzer = evaluate.call_args.args[5]
+        self.assertEqual(analyzer.cppcheck_timeout_seconds, 12.5)
 
     def test_truncated_generation_is_saved_with_zero_score_and_usage(self):
         provider = MagicMock()
@@ -56,7 +71,8 @@ class TestCLI(unittest.TestCase):
         self.assertEqual(data["tasks"][0]["generation"]["usage"]["total_tokens"], 30)
 
     def test_invalid_generation_arguments_are_rejected(self):
-        for flag, value in (("--max-tokens", "0"), ("--request-timeout", "nan"), ("--temperature", "inf")):
+        for flag, value in (("--max-tokens", "0"), ("--request-timeout", "nan"), ("--temperature", "inf"),
+                            ("--static-analysis-timeout", "0"), ("--static-analysis-timeout", "nan")):
             with self.subTest(flag=flag), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
                 cli.build_parser().parse_args(["run", flag, value])
 

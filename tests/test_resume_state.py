@@ -16,8 +16,10 @@ def checkpoint():
         "task_fingerprints": {"one": "task"}, "compiler": {"name": "tcc", "version": "1"},
         "static_analysis": {"engine": "builtin"}, "platform": {"system": "Windows", "release": "10", "machine": "x64"},
         "generation_settings": {"temperature": 0.7, "max_tokens": 512, "request_timeout_seconds": 10},
-        "execution_settings": {"isolation": "process", "sanitizers": [], "max_output_bytes": 4096},
-        "run_options": {"compiler": "tcc", "allow_standard_fallback": False}},
+        "execution_settings": {"isolation": "process", "sanitizers": [], "max_output_bytes": 4096,
+                               "static_analysis_timeout_seconds": 42.0},
+        "run_options": {"compiler": "tcc", "allow_standard_fallback": False,
+                        "static_analysis_timeout": 42.0}},
         "tasks": [{"task_id": "one", "tier": 1, "model_name": "provider/model", "compiled": False,
                    "test_result": {"total": 0, "passed": 0, "failed": 0, "completed": False, "all_passed": False},
                    "size_metrics": {"measured": False}, "safety_metrics": {},
@@ -34,6 +36,7 @@ class TestResumeState(unittest.TestCase):
             self.assertEqual((args.model, args.temperature, args.max_tokens, args.request_timeout),
                              ("provider/model", 0.7, 512, 10))
             self.assertEqual((args.tasks, args.isolation, args.max_output_bytes), ("one", "process", 4096))
+            self.assertEqual(args.static_analysis_timeout, 42.0)
             self.assertEqual((args.output, args.jobs), (path, 4))
             self.assertEqual(report["metadata"]["run_id"], "same-run")
 
@@ -50,6 +53,10 @@ class TestResumeState(unittest.TestCase):
                                       _explicit_options={"--output", "--jobs"})
             load_resume(args)
             self.assertEqual((args.output, args.jobs), ("another.json", 8))
+            args = argparse.Namespace(resume=path, static_analysis_timeout=30.0,
+                                      _explicit_options={"--static-analysis-timeout"})
+            with self.assertRaisesRegex(ValueError, "static-analysis-timeout"):
+                load_resume(args)
 
     def test_fingerprint_toolchain_runtime_and_settings_must_match_before_resume(self):
         report = checkpoint()

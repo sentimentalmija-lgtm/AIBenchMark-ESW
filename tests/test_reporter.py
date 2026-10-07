@@ -67,6 +67,18 @@ class TestReporter(unittest.TestCase):
         self.assertIn("cppcheck failed", BenchmarkReporter.generate_markdown(restored, "test"))
         self.assertIn("cppcheck failed", BenchmarkReporter.generate_cli_table(restored, "test"))
 
+    def test_cppcheck_timeout_is_preserved_and_warns_about_reduced_coverage(self):
+        result = self.result("one", TaskWeights())
+        result.safety_metrics.cppcheck_status = "timeout"
+        result.safety_metrics.cppcheck_diagnostic = "Command 'cppcheck' timed out after 30 seconds"
+        restored = BenchmarkReporter.from_json_dict(
+            BenchmarkReporter.to_json_dict([result], "test"))
+        self.assertEqual(restored[0].safety_metrics.cppcheck_status, "timeout")
+        for output in (BenchmarkReporter.generate_markdown(restored, "test"),
+                       BenchmarkReporter.generate_cli_table(restored, "test")):
+            self.assertIn("cppcheck timed out", output)
+            self.assertIn("safety score uses built-in rules only", output)
+
     def test_mixed_weights_round_trip_and_display_per_task(self):
         results = [self.result("one", TaskWeights()),
                    self.result("two", TaskWeights(0.8, 0.1, 0.1))]

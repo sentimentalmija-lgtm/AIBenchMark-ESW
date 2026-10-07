@@ -1,23 +1,23 @@
 {
   "schema_version": 2,
   "metadata": {
-    "run_id": "45b6693127f649d1b7161898944ed236",
-    "created_at_utc": "2026-10-06T14:34:09.148619+00:00",
+    "run_id": "c8706203beb84fafadd9bb267713ae8f",
+    "created_at_utc": "2026-10-07T10:53:26.285499+00:00",
     "benchmark_version": "0.1.0",
-    "evaluator_sha256": "0252b55751695a93abbd94e00c38daee98d6b729e968502a04d8ec92bca901d1",
-    "python_version": "3.11.15",
+    "evaluator_sha256": "ba6088ac44b9d09a019c51105a79a8962795d925d5b6b36937065dcc6a0f535c",
+    "python_version": "3.14.4",
     "platform": {
-      "system": "Windows",
-      "release": "10",
-      "machine": "AMD64"
+      "system": "Linux",
+      "release": "6.18.40.1-microsoft-standard-WSL2",
+      "machine": "x86_64"
     },
     "compiler": {
-      "name": "tcc",
-      "version": "tcc version 0.9.27 (x86_64 Windows)",
+      "name": "gcc",
+      "version": "gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0",
       "target": {
         "target": "host"
       },
-      "optimization": "native",
+      "optimization": "-Os",
       "allow_standard_fallback": false
     },
     "static_analysis": {
@@ -53,7 +53,8 @@
           "style",
           "performance",
           "portability"
-        ]
+        ],
+        "cppcheck_timeout_seconds": 30.0
       }
     },
     "source_revision": null,
@@ -190,17 +191,19 @@
       "isolation": "native",
       "memory_limit_bytes": null,
       "sanitizers": [],
-      "process_backend": "windows-job",
+      "process_backend": "posix-session",
       "cpu_limit": null,
       "footprint": {
         "target": "host",
         "measurement": "host-object"
-      }
+      },
+      "static_analysis_timeout_seconds": 30.0
     },
     "run_options": {
-      "compiler": "C:\\Users\\Admin\\scoop\\apps\\tcc\\0.9.27\\tcc\\tcc.exe",
+      "compiler": "gcc",
       "allow_standard_fallback": false,
       "compile_timeout": 30.0,
+      "static_analysis_timeout": 30.0,
       "max_output_bytes": 1048576,
       "isolation": "native",
       "memory_limit_bytes": null,
@@ -234,9 +237,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 361,
+        "flash_bytes": 696,
         "ram_bytes": 0,
-        "ref_flash_bytes": 361,
+        "ref_flash_bytes": 696,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -254,7 +257,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.179,
+      "execution_time_sec": 0.257,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -275,8 +278,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.17893780000122206,
-      "reference_validation_time_sec": 0.03489369999988412,
+      "candidate_time_sec": 0.2572996470007638,
+      "reference_validation_time_sec": 0.0006252640014281496,
       "footprint_target": "host"
     },
     {
@@ -294,9 +297,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 270,
+        "flash_bytes": 237,
         "ram_bytes": 0,
-        "ref_flash_bytes": 270,
+        "ref_flash_bytes": 237,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -314,7 +317,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.177,
+      "execution_time_sec": 0.255,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -335,8 +338,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.17654790000051435,
-      "reference_validation_time_sec": 0.035850899999786634,
+      "candidate_time_sec": 0.25481929300076445,
+      "reference_validation_time_sec": 0.0006227630001376383,
       "footprint_target": "host"
     },
     {
@@ -354,9 +357,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 1474,
+        "flash_bytes": 567,
         "ram_bytes": 0,
-        "ref_flash_bytes": 1474,
+        "ref_flash_bytes": 567,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -374,7 +377,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.178,
+      "execution_time_sec": 0.294,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -395,8 +398,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.1780551000010746,
-      "reference_validation_time_sec": 0.03530239999963669,
+      "candidate_time_sec": 0.29383918800158426,
+      "reference_validation_time_sec": 0.0006131629997980781,
       "footprint_target": "host"
     },
     {
@@ -414,9 +417,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 1186,
+        "flash_bytes": 549,
         "ram_bytes": 0,
-        "ref_flash_bytes": 1186,
+        "ref_flash_bytes": 549,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -434,7 +437,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.197,
+      "execution_time_sec": 0.304,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -455,8 +458,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.19686950000141223,
-      "reference_validation_time_sec": 0.03494959999989078,
+      "candidate_time_sec": 0.30357418499988853,
+      "reference_validation_time_sec": 0.000723474000551505,
       "footprint_target": "host"
     },
     {
@@ -474,9 +477,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 1134,
+        "flash_bytes": 401,
         "ram_bytes": 0,
-        "ref_flash_bytes": 1134,
+        "ref_flash_bytes": 401,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -494,7 +497,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.182,
+      "execution_time_sec": 0.249,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -515,8 +518,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.18219710000084888,
-      "reference_validation_time_sec": 0.034045599999444676,
+      "candidate_time_sec": 0.2491378100021393,
+      "reference_validation_time_sec": 0.0007167740004661027,
       "footprint_target": "host"
     },
     {
@@ -534,9 +537,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 636,
+        "flash_bytes": 302,
         "ram_bytes": 0,
-        "ref_flash_bytes": 636,
+        "ref_flash_bytes": 302,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -554,7 +557,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.19,
+      "execution_time_sec": 0.322,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -575,8 +578,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.19030630000088422,
-      "reference_validation_time_sec": 0.03415339999992284,
+      "candidate_time_sec": 0.32192496399511583,
+      "reference_validation_time_sec": 0.0005974610030534677,
       "footprint_target": "host"
     },
     {
@@ -594,9 +597,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 830,
+        "flash_bytes": 505,
         "ram_bytes": 0,
-        "ref_flash_bytes": 830,
+        "ref_flash_bytes": 505,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -614,7 +617,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.186,
+      "execution_time_sec": 0.28,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -635,8 +638,8 @@
         "max_ram_bytes": 256,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.1857166000008874,
-      "reference_validation_time_sec": 0.034984300000360236,
+      "candidate_time_sec": 0.2799061619989516,
+      "reference_validation_time_sec": 0.0006741690012859181,
       "footprint_target": "host"
     },
     {
@@ -654,9 +657,9 @@
         "returncode": 0
       },
       "size_metrics": {
-        "flash_bytes": 462,
+        "flash_bytes": 291,
         "ram_bytes": 0,
-        "ref_flash_bytes": 462,
+        "ref_flash_bytes": 291,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -674,7 +677,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.182,
+      "execution_time_sec": 0.25,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -695,8 +698,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.18222029999924416,
-      "reference_validation_time_sec": 0.03379560000030324,
+      "candidate_time_sec": 0.2504963389983459,
+      "reference_validation_time_sec": 0.0006694580006296746,
       "footprint_target": "host"
     }
   ]

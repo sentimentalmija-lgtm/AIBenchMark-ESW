@@ -16,10 +16,11 @@ _GENERATION_OPTIONS = {
 }
 _EXECUTION_OPTIONS = {
     "compile_timeout_seconds": "compile_timeout", "max_output_bytes": "max_output_bytes",
+    "static_analysis_timeout_seconds": "static_analysis_timeout",
     "isolation": "isolation", "memory_limit_bytes": "memory_limit_bytes", "sanitizers": "sanitizers",
 }
 _RUN_OPTIONS = ("compiler", "allow_standard_fallback", "compile_timeout", "max_output_bytes",
-                "isolation", "memory_limit_bytes", "sanitizers", "save_solutions", "tasks_root",
+                "static_analysis_timeout", "isolation", "memory_limit_bytes", "sanitizers", "save_solutions", "tasks_root",
                 "system_prompt_file", "target", "cross_compiler")
 _PATH_OPTIONS = {"save_solutions", "tasks_root", "system_prompt_file"}
 

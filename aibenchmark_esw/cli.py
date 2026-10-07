@@ -12,7 +12,7 @@ from aibenchmark_esw.models import TaskConfig
 
 from aibenchmark_esw.dataset import DatasetLoader, validate_task_assets
 from aibenchmark_esw.sandbox.executor import ExecutionSandbox
-from aibenchmark_esw.sandbox.static_analyzer import StaticAnalyzer
+from aibenchmark_esw.sandbox.static_analyzer import DEFAULT_CPPCHECK_TIMEOUT_SECONDS, StaticAnalyzer
 from aibenchmark_esw.metrics.reporter import BenchmarkReporter
 from aibenchmark_esw.llm.client import LLMClient, is_fatal_provider_error
 from aibenchmark_esw.evaluation import evaluate_task, failed_evaluation
@@ -158,6 +158,9 @@ def build_parser() -> argparse.ArgumentParser:
         command.add_argument("--memory-limit-bytes", type=_positive_int)
         command.add_argument("--sanitizers", default="", help="Comma-separated address,undefined; requires GCC/Clang")
     for command in (run_p, eval_p):
+        command.add_argument("--static-analysis-timeout", type=_positive_float,
+                             default=DEFAULT_CPPCHECK_TIMEOUT_SECONDS,
+                             help="Maximum cppcheck runtime in seconds (default: 30)")
         verbosity = command.add_mutually_exclusive_group()
         verbosity.add_argument("--quiet", action="store_true", help="Show final summary only")
         verbosity.add_argument("--verbose", action="store_true", help="Show full task diagnostics on stderr")
@@ -183,6 +186,11 @@ def _new_executor(args):
         isolation=getattr(args, "isolation", "native"),
         memory_limit_bytes=getattr(args, "memory_limit_bytes", None), sanitizers=sanitizers,
         target=getattr(args, "target", None), cross_compiler=getattr(args, "cross_compiler", None))
+
+
+def _new_analyzer(args):
+    return StaticAnalyzer(cppcheck_timeout_seconds=getattr(
+        args, "static_analysis_timeout", DEFAULT_CPPCHECK_TIMEOUT_SECONDS))
 
 
 def _target_task(task: TaskConfig, args) -> TaskConfig:
@@ -290,7 +298,7 @@ def cmd_eval(args: argparse.Namespace) -> int:
         return 1
 
     executor = _new_executor(args)
-    analyzer = StaticAnalyzer()
+    analyzer = _new_analyzer(args)
     metadata = collect_run_metadata([task], executor, static_analyzer=analyzer) if output or getattr(args, "junit_output", None) else None
     if metadata is not None:
         metadata.update(run_status="running", pending_tasks=[task.id])
@@ -407,21 +415,22 @@ def cmd_run(args: argparse.Namespace) -> int:
     system_prompt = Path(system_file).read_text(encoding="utf-8") if system_file else None
     if system_prompt is not None and not system_prompt.strip():
         raise ValueError("System prompt file must not be empty")
-    executor, analyzer = _new_executor(args), StaticAnalyzer()
+    executor, analyzer = _new_executor(args), _new_analyzer(args)
     cancelled = threading.Event()
     executor.cancel_event = cancelled
     client = _new_client(args) if args.model != "baseline" else None
     settings = None if client is None else {**client.settings(),
         "system_prompt_sha256": text_sha256(system_prompt) if system_prompt is not None else None}
     metadata = collect_run_metadata(tasks, executor, settings, analyzer)
-    option_names = ("compiler", "allow_standard_fallback", "compile_timeout", "max_output_bytes",
+    option_names = ("compiler", "allow_standard_fallback", "compile_timeout", "static_analysis_timeout", "max_output_bytes",
                     "isolation", "memory_limit_bytes", "sanitizers", "save_solutions", "tasks_root", "system_prompt_file",
                     "target", "cross_compiler")
     metadata["run_options"] = {name: getattr(args, name, None) for name in option_names}
     metadata["run_options"]["compiler"] = executor.compiler_path
     metadata["run_options"].update(allow_standard_fallback=executor.allow_standard_fallback,
         compile_timeout=executor.compile_timeout_seconds, max_output_bytes=executor.max_output_bytes,
-        isolation=executor.isolation, memory_limit_bytes=executor.memory_limit_bytes, sanitizers=list(executor.sanitizers))
+        isolation=executor.isolation, memory_limit_bytes=executor.memory_limit_bytes, sanitizers=list(executor.sanitizers),
+        static_analysis_timeout=analyzer.cppcheck_timeout_seconds)
     for name in ("save_solutions", "tasks_root", "system_prompt_file"):
         if metadata["run_options"][name] is not None:
             metadata["run_options"][name] = str(Path(metadata["run_options"][name]).resolve())
@@ -487,7 +496,7 @@ def cmd_run(args: argparse.Namespace) -> int:
             if solution_directory is not None:
                 atomic_write_text(Path(solution_directory) / f"{task.id}.c", solution_code)
             result = evaluate_task(task, solution_code, reference, args.model, executor,
-                                   StaticAnalyzer(), reference_cache=cache)
+                                   analyzer, reference_cache=cache)
         except (KeyboardInterrupt, InterruptedError):
             result = failed_evaluation(task, args.model, "Evaluation interrupted by user")
             state = "interrupted"

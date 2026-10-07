@@ -34,12 +34,14 @@ the failure stays in the report and denominator while other valid tasks continue
 Passing this file check does not establish reference correctness or budget fit.
 
 Reports also record the selected static-analysis backend and cppcheck version.
-Per-task safety results distinguish disabled, completed, failed, and unrun
-cppcheck checks. A failed invocation retains its diagnostic and uses the built-in
-rules; reports and comparisons explicitly warn about that reduced coverage.
+Per-task safety results distinguish disabled, completed, failed, timed-out, and
+unrun cppcheck checks. Failed and timed-out invocations retain their diagnostic
+and use the built-in rules; reports and comparisons explicitly warn about that
+reduced coverage. `run` and `eval` accept `--static-analysis-timeout` in seconds
+(default 30), recorded in both execution settings and analyzer configuration.
 Comparisons reject differing recorded analyzer configurations/versions and warn
-when older reports lack analyzer information. CSV includes cppcheck completed
-and failed task counts.
+when older reports lack analyzer information. CSV includes cppcheck completed,
+failed, and timed-out task counts.
 
 For repeatable analyzer selection, set `AIBENCHMARK_ESW_CPPCHECK=off` to use only
 the built-in rules, or set it to a cppcheck executable path. When unset, PATH

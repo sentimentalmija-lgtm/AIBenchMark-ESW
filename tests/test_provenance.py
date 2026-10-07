@@ -72,6 +72,13 @@ class TestProvenance(unittest.TestCase):
             metadata = collect_run_metadata([self.task], self.executor, static_analyzer=analyzer)
         self.assertEqual(metadata["static_analysis"],
                          {"engine": "builtin+cppcheck", "cppcheck_version": "Cppcheck 2.fixture", "configuration": analyzer.configuration()})
+        self.assertEqual(metadata["execution_settings"]["static_analysis_timeout_seconds"],
+                         analyzer.cppcheck_timeout_seconds)
+        custom = StaticAnalyzer("fixture-cppcheck", cppcheck_timeout_seconds=12.5)
+        with patch("aibenchmark_esw.provenance._command_output", side_effect=output):
+            metadata = collect_run_metadata([self.task], self.executor, static_analyzer=custom)
+        self.assertEqual(metadata["execution_settings"]["static_analysis_timeout_seconds"], 12.5)
+        self.assertEqual(metadata["static_analysis"]["configuration"]["cppcheck_timeout_seconds"], 12.5)
         with patch("aibenchmark_esw.sandbox.static_analyzer.shutil.which", return_value=None):
             metadata = collect_run_metadata([self.task], self.executor, static_analyzer=StaticAnalyzer())
         self.assertEqual(metadata["static_analysis"], {"engine": "builtin", "cppcheck_version": None, "configuration": analyzer.configuration()})

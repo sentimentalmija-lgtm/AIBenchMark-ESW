@@ -149,6 +149,7 @@ def compare_runs(reports, *, _allow_repeated_models=False, _check_generation=Tru
             "duration_tasks": len(durations), "provenance": "Recorded" if provenance else "Unknown",
             "cppcheck_completed_tasks": sum(r.safety_metrics.cppcheck_status == "completed" for r in results),
             "cppcheck_failed_tasks": sum(r.safety_metrics.cppcheck_status == "failed" for r in results),
+            "cppcheck_timeout_tasks": sum(r.safety_metrics.cppcheck_status == "timeout" for r in results),
         })
     gaps = []
     for task_id in sorted(expected):

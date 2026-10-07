@@ -76,7 +76,7 @@ def validate_task_result(item, default_model):
     violations = safety.get("violations", [])
     if not isinstance(violations, list) or any(not isinstance(value, str) for value in violations):
         raise ValueError("safety_metrics.violations must be an array of strings")
-    if safety.get("cppcheck_status") not in (None, "disabled", "not_run", "completed", "failed"):
+    if safety.get("cppcheck_status") not in (None, "disabled", "not_run", "completed", "failed", "timeout"):
         raise ValueError("Unknown cppcheck status")
     findings = safety.get("findings", [])
     if not isinstance(findings, list):

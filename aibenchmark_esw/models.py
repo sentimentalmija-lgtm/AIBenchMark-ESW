@@ -1,7 +1,7 @@
 from dataclasses import asdict, dataclass, field
 import math
 import re
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Literal
 from pathlib import Path, PureWindowsPath
 
 
@@ -183,7 +183,7 @@ class StaticSafetyMetrics:
     error_count: int = 0
     warning_count: int = 0
     violations: List[str] = field(default_factory=list)
-    cppcheck_status: Optional[str] = None
+    cppcheck_status: Optional[Literal["disabled", "not_run", "completed", "failed", "timeout"]] = None
     cppcheck_diagnostic: Optional[str] = None
     findings: List[Dict[str, Any]] = field(default_factory=list)
 

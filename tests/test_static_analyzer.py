@@ -212,12 +212,20 @@ void normal(void) {}
         with TemporaryDirectory() as directory:
             source = Path(directory) / "solution.c"
             source.write_text("void fn(void) { goto done; done:; }", encoding="utf-8")
+            analyzer = StaticAnalyzer("cppcheck", cppcheck_timeout_seconds=12.5)
             with patch("aibenchmark_esw.sandbox.static_analyzer.subprocess.run",
-                       side_effect=subprocess.TimeoutExpired("cppcheck", 10)):
-                metrics = StaticAnalyzer("cppcheck").analyze(source)
-            self.assertEqual(metrics.cppcheck_status, "failed")
+                       side_effect=subprocess.TimeoutExpired("cppcheck", 12.5)) as run:
+                metrics = analyzer.analyze(source)
+            self.assertEqual(run.call_args.kwargs["timeout"], 12.5)
+            self.assertEqual(analyzer.configuration()["cppcheck_timeout_seconds"], 12.5)
+            self.assertEqual(metrics.cppcheck_status, "timeout")
             self.assertEqual(metrics.warning_count, 1)
             self.assertIn("timed out", metrics.cppcheck_diagnostic)
+
+    def test_cppcheck_timeout_must_be_finite_and_positive(self):
+        for timeout in (0, -1, float("inf"), float("nan"), True):
+            with self.subTest(timeout=timeout), self.assertRaises(ValueError):
+                StaticAnalyzer(cppcheck_timeout_seconds=timeout)
 
 
 if __name__ == "__main__":
