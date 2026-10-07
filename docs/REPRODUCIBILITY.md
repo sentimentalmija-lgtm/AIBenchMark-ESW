@@ -178,7 +178,12 @@ being overwritten. System prompt files and per-task prompt overrides are hashed.
 compile target objects while tests run on the host. Default limits may be overridden
 by `limits.targets["arm:cortex-m0"]` or CPU key `cortex-m0`; effective budgets,
 compiler/flags and target are recorded and rendered. Mixed targets cannot be
-ranked together. ELF allocated non-NOBITS sections count as Flash; writable and
+ranked together. Reports retain the resolved compiler path and file stamp for
+provenance, while compare, aggregate and resume match cross-compilers by target,
+executable name, version and flags when the version is available. Missing versions
+retain strict comparison. Resume resolves saved absolute compiler paths from the
+current explicit setting or local compiler discovery, then validates stable toolchain
+identity. ELF allocated non-NOBITS sections count as Flash; writable and
 NOBITS sections count as RAM, including architecture-specific allocated sections.
 Measurements exclude startup/linker/stack/heap and do not establish final MCU fit.
 Native host behaviour remains the default; Mach-O footprint is unsupported.

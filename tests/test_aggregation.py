@@ -81,6 +81,23 @@ class TestAggregation(unittest.TestCase):
         self.assertEqual([group["resolved_model"] for group in groups], ["snapshot-1", "snapshot-2"])
         self.assertEqual([group["runs"] for group in groups], [1, 1])
 
+    def test_cross_compiler_paths_do_not_split_equivalent_aggregate_samples(self):
+        first, second = fixture_report(), fixture_report(run_id="run-2")
+        for report, compiler, stamp in (
+                (first, "/opt/arm/releases/13/bin/cc1", [1234, 100]),
+                (second, r"C:\Toolchain\versions\13\gcc.exe", [1234, 200])):
+            footprint = {"target": "arm:cortex-m0", "compiler": compiler,
+                         "compiler_name": "arm-none-eabi-gcc",
+                         "version": "arm-none-eabi-gcc 13.2.1",
+                         "flags": ["-mcpu=cortex-m0", "-mthumb"], "stamp": stamp,
+                         "measurement": "target-object"}
+            report["metadata"]["compiler"]["target"] = footprint
+            report["metadata"]["execution_settings"] = {"isolation": "process", "footprint": footprint}
+
+        summary = aggregate_runs([first, second])
+        self.assertEqual(summary["groups"][0]["runs"], 2)
+        self.assertEqual(second["metadata"]["compiler"]["target"]["stamp"], [1234, 200])
+
     def test_generation_configurations_are_named_separate_groups(self):
         first, second = fixture_report(), fixture_report(run_id="run-2")
         second["metadata"]["generation_settings"]["temperature"] = 1

@@ -2,10 +2,11 @@
 
 import copy
 import json
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 from aibenchmark_esw.metrics.comparison import generation_conditions
 from aibenchmark_esw.metrics.reporter import BenchmarkReporter
+from aibenchmark_esw.sandbox.cross_compiler import comparable_compiler_metadata, comparable_execution_settings
 
 
 _GENERATION_OPTIONS = {
@@ -22,6 +23,10 @@ _RUN_OPTIONS = ("compiler", "allow_standard_fallback", "compile_timeout", "max_o
                 "isolation", "memory_limit_bytes", "sanitizers", "save_solutions", "tasks_root",
                 "system_prompt_file", "target", "cross_compiler")
 _PATH_OPTIONS = {"save_solutions", "tasks_root", "system_prompt_file"}
+
+
+def _is_absolute_compiler_path(value):
+    return isinstance(value, str) and (Path(value).is_absolute() or PureWindowsPath(value).is_absolute())
 
 
 def _equivalent(option, first, second):
@@ -79,10 +84,13 @@ def load_resume(args):
     options = metadata.get("run_options") or {}
     if not isinstance(options, dict):
         raise ValueError("Saved run_options must be an object")
+    explicit = set(getattr(args, "_explicit_options", ()))
     for option in _RUN_OPTIONS:
         if option in options:
+            if (option == "cross_compiler"
+                    and ("--cross-compiler" in explicit or _is_absolute_compiler_path(options[option]))):
+                continue
             _restore(args, option, options[option])
-    explicit = set(getattr(args, "_explicit_options", ()))
     if "--tasks" in explicit:
         requested = [item.strip() for item in (getattr(args, "tasks", "") or "").split(",")]
         if len(requested) != len(set(requested)) or set(requested) != set(selected):
@@ -106,9 +114,14 @@ def validate_resume(report, fresh_metadata, tasks):
     for key in required:
         if saved.get(key) is None or fresh_metadata.get(key) is None:
             raise ValueError(f"Resume requires recorded {key} to verify compatibility")
-        if saved[key] != fresh_metadata[key]:
+        expected, actual = saved[key], fresh_metadata[key]
+        if key == "compiler":
+            expected = comparable_compiler_metadata(expected)
+            actual = comparable_compiler_metadata(actual)
+        if expected != actual:
             raise ValueError(f"Resume has incompatible {key}; start a separate run")
-    if saved.get("execution_settings") != fresh_metadata.get("execution_settings"):
+    if (comparable_execution_settings(saved.get("execution_settings"))
+            != comparable_execution_settings(fresh_metadata.get("execution_settings"))):
         raise ValueError("Resume has incompatible execution_settings; start a separate run")
     if generation_conditions(saved) != generation_conditions(fresh_metadata):
         raise ValueError("Resume has incompatible generation settings; start a separate run")

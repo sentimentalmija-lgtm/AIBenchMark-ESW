@@ -6,6 +6,7 @@ import math
 from dataclasses import asdict
 
 from aibenchmark_esw.metrics.reporter import BenchmarkReporter
+from aibenchmark_esw.sandbox.cross_compiler import comparable_compiler_metadata, comparable_execution_settings
 
 
 GENERATION_CONDITIONS = ("temperature", "max_tokens", "request_timeout_seconds",
@@ -91,6 +92,10 @@ def compare_runs(reports, *, _allow_repeated_models=False, _check_generation=Tru
     for key in ("dataset_sha256", "evaluator_sha256", "benchmark_version", "compiler", "static_analysis",
                 "execution_settings", "scoring_policy"):
         available = [metadata[key] for _, _, _, metadata, _ in runs if metadata.get(key)]
+        if key == "compiler":
+            available = [comparable_compiler_metadata(value) for value in available]
+        elif key == "execution_settings":
+            available = [comparable_execution_settings(value) for value in available]
         if any(value != available[0] for value in available[1:]):
             raise ValueError(f"Incompatible {key} across reports")
     for key in ("system", "machine", "release"):

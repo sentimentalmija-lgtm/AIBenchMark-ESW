@@ -63,6 +63,44 @@ class TestComparison(unittest.TestCase):
         with self.assertRaises(ValueError):
             compare_runs([self.report("same"), self.report("same")])
 
+    def test_cross_compiler_installation_paths_and_stamps_do_not_block_comparison(self):
+        first, second = self.report("one"), self.report("two")
+        first_target = {"target": "arm:cortex-m0", "compiler": "/opt/arm/releases/13/bin/arm-none-eabi-gcc",
+                        "compiler_name": "arm-none-eabi-gcc",
+                        "version": "arm-none-eabi-gcc 13.2.1", "flags": ["-mcpu=cortex-m0", "-mthumb"],
+                        "stamp": [1234, 100], "measurement": "target-object"}
+        second_target = {**first_target, "compiler": r"C:\Toolchain\versions\13\arm-none-eabi-gcc.exe",
+                         "stamp": [1234, 200]}
+        first["metadata"]["compiler"]["target"] = first_target
+        second["metadata"]["compiler"]["target"] = second_target
+        first["metadata"]["execution_settings"] = {"isolation": "process", "footprint": first_target}
+        second["metadata"]["execution_settings"] = {"isolation": "process", "footprint": second_target}
+
+        compare_runs([first, second])
+        self.assertEqual(second["metadata"]["compiler"]["target"]["compiler"], second_target["compiler"])
+        self.assertEqual(second["metadata"]["compiler"]["target"]["stamp"], [1234, 200])
+
+        legacy_first, legacy_second = copy.deepcopy(first), copy.deepcopy(second)
+        for report in (legacy_first, legacy_second):
+            report["metadata"]["compiler"]["target"].pop("compiler_name")
+        compare_runs([legacy_first, legacy_second])
+
+        for field, value in (("target", "arm:cortex-m3"),
+                             ("compiler_name", "arm-none-eabi-clang"),
+                             ("version", "arm-none-eabi-gcc 14.1.0"),
+                             ("flags", ["-mcpu=cortex-m3", "-mthumb"])):
+            incompatible = copy.deepcopy(second)
+            incompatible["metadata"]["compiler"]["target"][field] = value
+            incompatible["metadata"]["execution_settings"]["footprint"][field] = value
+            with self.subTest(field=field), self.assertRaisesRegex(ValueError, "compiler"):
+                compare_runs([first, incompatible])
+
+        unknown_version = copy.deepcopy(second)
+        unknown_version["metadata"]["compiler"]["target"]["version"] = None
+        unknown_version["metadata"]["execution_settings"]["footprint"]["version"] = None
+        with self.assertRaisesRegex(ValueError, "compiler"):
+            compare_runs([first, unknown_version])
+
     def test_task_fingerprint_mismatch_is_rejected_even_without_run_provenance(self):
         first, second = self.report("one"), self.report("two")
         first["tasks"][0]["provenance"] = {"task_sha256": "one"}

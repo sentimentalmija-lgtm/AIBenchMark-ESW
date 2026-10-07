@@ -192,7 +192,7 @@ The combined size ($\text{Flash} + \text{RAM}$) is compared to the measured refe
 * Missing or unreadable measurements are reported as unavailable and receive no memory points.
 * References that fail to compile, do not complete and pass every test, or exceed either resource budget produce an explicit reference-validation error and receive no memory points.
 
-Reference implementations must pass all functional tests and fit the budgets with the compiler used for comparisons. The refreshed TCC baseline scores 100/100 and passes all 77 tests. The ring buffer's Flash budget is 2048 bytes, accommodating its measured 1474-byte TCC object footprint. Its RAM footprint is legitimately zero because it uses caller-owned storage. The Q1.15 task has 16 cases, including a sweep of all 65,536 raw values for selected arithmetic identities and scaling checks; it does not exhaust all input pairs. The tick timer has 16 cases for wrap, deadline boundaries, phase retention, and missed-expiration counts; real elapsed time from its stored origin must remain below 2^32 ticks. Other compilers may produce different footprints; resource limits remain enforced for both candidates and references.
+Reference implementations must pass all functional tests and fit the budgets with the compiler used for comparisons. The refreshed GCC 15.2 baseline scores 100/100 and passes all 77 tests. The ring buffer's Flash budget is 2048 bytes, accommodating its measured 567-byte GCC object footprint. Its RAM footprint is legitimately zero because it uses caller-owned storage. The Q1.15 task has 16 cases, including a sweep of all 65,536 raw values for selected arithmetic identities and scaling checks; it does not exhaust all input pairs. The tick timer has 16 cases for wrap, deadline boundaries, phase retention, and missed-expiration counts; real elapsed time from its stored origin must remain below 2^32 ticks. Other compilers may produce different footprints; resource limits remain enforced for both candidates and references.
 
 ### 3. Static Code Safety ($S_{\text{safety}}$, 20%)
 Checks selected embedded safety rules using built-in heuristics and, when installed, `cppcheck`. These checks are not full MISRA-C certification. Penalizes:
@@ -316,8 +316,13 @@ clang` or `--target avr:atmega328p` adds real target-object compilation while Un
 runs on the host. Cross compilers resolve from `--cross-compiler`,
 `AIBENCHMARK_ESW_CROSS_CC`, the architecture's GCC driver, then Clang on PATH.
 Task limits may use `default` plus `targets` overrides keyed by full target or CPU.
-Target, compiler, effective budgets and flags are recorded; mixed-target comparisons
-are rejected. Allocated non-NOBITS ELF sections count toward Flash, writable/NOBITS
+Target, compiler, effective budgets and flags are recorded. Reports retain the
+resolved compiler path and file stamp for provenance; compare, aggregate and resume
+match cross-compilers by target, executable name, version and flags when the version
+is available. Without a recorded version, comparison remains strict. Resuming a run
+does not force a saved absolute compiler path; the current explicit setting or local
+compiler discovery is used and checked against the recorded identity. Mixed-target
+comparisons are rejected. Allocated non-NOBITS ELF sections count toward Flash, writable/NOBITS
 sections toward RAM (including AVR progmem/vectors and ARM unwind/array sections
 when allocated). This excludes linker layout, startup libraries, stack and heap;
 a target object is not a final MCU image or proof of deployment fit. Mach-O is
