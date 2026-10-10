@@ -5,6 +5,8 @@ import statistics
 
 
 def score_statistics(values):
+    if not values:
+        return {'mean': None, 'sample_stddev': None, 'mean_ci95_approx': None}
     mean = statistics.mean(values)
     deviation = statistics.stdev(values) if len(values) > 1 else None
     margin = 1.96 * deviation / math.sqrt(len(values)) if deviation is not None else None

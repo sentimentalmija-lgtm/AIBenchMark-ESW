@@ -13,7 +13,7 @@
 - **Compiler**: clang / clang version 19.1.5 (-Os)
 - **Static analysis**: builtin / No cppcheck version recorded
 - **Dataset SHA-256**: `33924d0c6c9af95325974ac45aed9d4d07c6ed07541f2db7dc86699c1b9d67d3`
-- **Evaluator SHA-256**: `0d67063d13d894eb2820173cca68f40a786fe3acc59135565f1d9157a9b189bb`
+- **Evaluator SHA-256**: `82cd9fb5890b9c025dbe351eefef334c1177377566646562443eb894d1dc4e5b`
 - **Source revision**: `082ec46bd40d2f4548945f7c28bba616a6d718ab`
 - **Source had local changes**: True
 

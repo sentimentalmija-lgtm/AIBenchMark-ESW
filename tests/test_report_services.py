@@ -8,9 +8,21 @@ from test_aggregation import fixture_report
 from aibenchmark_esw.metrics.aggregation import aggregate_runs, render_aggregation
 from aibenchmark_esw.metrics.comparison import compare_runs, render_comparison
 from aibenchmark_esw.metrics.reporter import BenchmarkReporter
+from aibenchmark_esw.metrics.statistics import score_statistics
 
 
 class ReportIntegrityTests(unittest.TestCase):
+    def test_empty_collection_can_resume_but_cannot_be_compared(self):
+        checkpoint = fixture_report(run_id='wrapper')
+        checkpoint['samples'] = []
+        checkpoint['sampling'] = {'requested': 1, 'completed': 0, 'pending': [0], 'pass_k': [1], 'statistics': {}}
+        checkpoint['metadata']['run_status'] = 'interrupted'
+        self.assertEqual(len(BenchmarkReporter.from_json_dict(checkpoint)), 1)
+        with self.assertRaisesRegex(ValueError, 'without completed samples'):
+            compare_runs([checkpoint, fixture_report(model='other')])
+        self.assertEqual(score_statistics([]),
+                         {'mean': None, 'sample_stddev': None, 'mean_ci95_approx': None})
+
     def test_provenance_shape_checked_before_policy_use(self):
         for value in ('bad', [1], 1):
             report = fixture_report()

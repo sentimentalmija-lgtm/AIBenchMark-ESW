@@ -31,6 +31,8 @@ def compare_runs(reports, *, _allow_repeated_models=False, _check_generation=Tru
     for report in reports:
         results = BenchmarkReporter.from_json_dict(report)
         model = report.get("model_name")
+        if "samples" in report and not report["samples"]:
+            raise ValueError(f"Cannot compare collection without completed samples: {model}")
         if (not isinstance(model, str) or not model.strip()
                 or (model in models and not _allow_repeated_models)):
             raise ValueError("Reports must have distinct, nonempty model names")
