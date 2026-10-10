@@ -45,6 +45,16 @@ def _positive_int(value: str) -> int:
     return number
 
 
+def _pass_k(value: str) -> str:
+    try:
+        values = [int(item.strip()) for item in value.split(",")]
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("must contain distinct positive integers separated by commas") from exc
+    if not values or any(number <= 0 for number in values) or len(values) != len(set(values)):
+        raise argparse.ArgumentTypeError("must contain distinct positive integers separated by commas")
+    return value
+
+
 def _positive_float(value: str) -> float:
     number = float(value)
     if not math.isfinite(number) or number <= 0:
@@ -136,7 +146,7 @@ def build_parser() -> argparse.ArgumentParser:
     run_p.add_argument("--output-cost-per-million", type=_nonnegative_float, help="Custom output token price in USD per million")
     run_p.add_argument("--max-cost-usd", type=_nonnegative_float, help="Shared conservative request budget; requires --max-tokens and known pricing")
     run_p.add_argument("--samples", type=_positive_int, default=1, help="Independent full runs per task")
-    run_p.add_argument("--pass-k", type=str, help="Comma-separated pass@k values, each <= --samples")
+    run_p.add_argument("--pass-k", type=_pass_k, help="Comma-separated pass@k values, each <= --samples")
     run_p.add_argument("--variant-seed", type=int, help="Deterministic task variant seed")
     run_p.add_argument("--heldout-tests", type=Path, help="Private per-task tests root; excluded from prompts")
 

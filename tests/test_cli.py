@@ -60,6 +60,16 @@ class TestCLI(unittest.TestCase):
             with self.subTest(flag=flag), redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
                 cli.build_parser().parse_args(["run", flag, value])
 
+    def test_pass_k_reports_cli_usage_for_invalid_values(self):
+        for value in ("abc", "0", "1,1", "1,", ""):
+            with self.subTest(value=value), redirect_stderr(io.StringIO()) as error, self.assertRaises(SystemExit) as exit_status:
+                cli.build_parser().parse_args(["run", "--samples", "2", "--pass-k", value])
+            self.assertEqual(exit_status.exception.code, 2)
+            self.assertIn("argument --pass-k", error.getvalue())
+            self.assertIn("positive integers", error.getvalue())
+        parsed = cli.build_parser().parse_args(["run", "--samples", "2", "--pass-k", "1,2"])
+        self.assertEqual(parsed.pass_k, "1,2")
+
     def test_model_notes_before_c_implementation_still_score_full_points(self):
         loader = DatasetLoader()
         reference = loader.get_reference_solution("tier1_crc16")

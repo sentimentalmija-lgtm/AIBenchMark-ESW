@@ -8,7 +8,7 @@
 
 > A host-based benchmark for evaluating AI-generated embedded C using functional tests, resource budgets, and selected static safety rules.
 
-The project is in early development: 13 tasks and 113 C test cases provide a reproducible reference baseline. The published [100-point baseline](results/baseline.md) measures the bundled golden implementations; it is not an OpenAI or Claude model score. See [reproducibility](docs/REPRODUCIBILITY.md), the [roadmap](docs/ROADMAP.md), and [contributor guidance](CONTRIBUTING.md).
+The project is in early development: 13 tasks and 114 C test cases provide a reproducible reference baseline. The published [100-point baseline](results/baseline.md) measures the bundled golden implementations; it is not an OpenAI or Claude model score. See [reproducibility](docs/REPRODUCIBILITY.md), the [roadmap](docs/ROADMAP.md), and [contributor guidance](CONTRIBUTING.md).
 
 ---
 
@@ -197,7 +197,7 @@ The combined size ($\text{Flash} + \text{RAM}$) is compared to the measured refe
 * Missing or unreadable measurements are reported as unavailable and receive no memory points.
 * References that fail to compile, do not complete and pass every test, or exceed either resource budget produce an explicit reference-validation error and receive no memory points.
 
-Reference implementations must pass all functional tests and fit the budgets with the compiler used for comparisons. The refreshed TCC baseline scores 100/100 and passes all 113 tests. The ring buffer's Flash budget is 2048 bytes, accommodating its measured 1474-byte TCC object footprint. Its RAM footprint is legitimately zero because it uses caller-owned storage. The Q1.15 task has 16 cases, including a sweep of all 65,536 raw values for selected arithmetic identities and scaling checks; it does not exhaust all input pairs. The tick timer has 16 cases for wrap, deadline boundaries, phase retention, and missed-expiration counts; real elapsed time from its stored origin must remain below 2^32 ticks. Other compilers may produce different footprints; resource limits remain enforced for both candidates and references.
+Reference implementations must pass all functional tests and fit the budgets with the compiler used for comparisons. The refreshed TCC baseline scores 100/100 and passes all 114 tests. The ring buffer's Flash budget is 2048 bytes, accommodating its measured 1474-byte TCC object footprint. Its RAM footprint is legitimately zero because it uses caller-owned storage. The Q1.15 task has 16 cases, including a sweep of all 65,536 raw values for selected arithmetic identities and scaling checks; it does not exhaust all input pairs. The tick timer has 16 cases for wrap, deadline boundaries, phase retention, and missed-expiration counts; real elapsed time from its stored origin must remain below 2^32 ticks. Other compilers may produce different footprints; resource limits remain enforced for both candidates and references.
 
 ### 3. Static Code Safety ($S_{\text{safety}}$, 20%)
 Checks selected embedded safety rules using built-in heuristics and, when installed, `cppcheck`. These checks are not full MISRA-C certification. Penalizes:

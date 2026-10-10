@@ -30,10 +30,10 @@ class TestCLIBacklogWorkflows(unittest.TestCase):
         self.assertAlmostEqual(pass_at_k(5, 2, 2), 0.7)
         with TemporaryDirectory() as directory:
             output = Path(directory) / "sampled.json"
-            self.assertEqual(self.invoke(["run", "--tasks", "tier1_crc16", "--samples", "2", "--output", str(output)])[0], 0)
+            self.assertEqual(self.invoke(["run", "--tasks", "tier1_crc16", "--samples", "2", "--pass-k", "2", "--output", str(output)])[0], 0)
             report = json.loads(output.read_text())
             self.assertEqual(len({child["metadata"]["run_id"] for child in report["samples"]}), 2)
-            self.assertEqual(report["sampling"]["statistics"]["tier1_crc16"]["pass_at_k"], {"1": 1.0, "2": 1.0})
+            self.assertEqual(report["sampling"]["statistics"]["tier1_crc16"]["pass_at_k"], {"2": 1.0})
             BenchmarkReporter.from_json_dict(report)
             from aibenchmark_esw.report_schema import validate_report_structure
             validate_report_structure(report)
