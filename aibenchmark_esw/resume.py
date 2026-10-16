@@ -156,7 +156,8 @@ def merge_generation_history(previous, current):
     previous["cost_usd"] = previous.pop("attempt_cost_usd", previous.get("cost_usd"))
     previous["known_cost_usd"] = previous.pop("attempt_known_cost_usd", previous.get("known_cost_usd"))
     previous["latency_seconds"] = previous.pop("attempt_latency_seconds", previous.get("latency_seconds"))
-    for key in ("usage_coverage", "known_latency_seconds", "latency_coverage"):
+    previous["usage_coverage"] = previous.pop("attempt_usage_coverage", previous.get("usage_coverage"))
+    for key in ("known_latency_seconds", "latency_coverage"):
         previous.pop(key, None)
     history.append(previous)
     result["history"] = history
@@ -165,6 +166,7 @@ def merge_generation_history(previous, current):
     result["attempt_cost_usd"] = current.get("cost_usd")
     result["attempt_known_cost_usd"] = current.get("known_cost_usd")
     result["attempt_latency_seconds"] = current.get("latency_seconds")
+    result["attempt_usage_coverage"] = copy.deepcopy(current.get("usage_coverage"))
     attempts = [attempt for attempt in history + [current]
                 if "attempts" not in attempt or attempt["attempts"]]
     if not attempts:
@@ -178,7 +180,25 @@ def merge_generation_history(previous, current):
         known_usage[key] = sum(value for value in known if value is not None) if known else None
         complete = all(value is not None for value in values)
         usage[key] = sum(value for value in values if value is not None) if complete else None
-        coverage[key] = {"known_attempts": sum(value is not None for value in values), "total_attempts": len(attempts)}
+        request_counts = []
+        for session in attempts:
+            requests = session.get("attempts")
+            if requests is not None:
+                # Raw provider attempts also recover coverage from older merged
+                # checkpoints that discarded the per-session coverage fields.
+                request_counts.append({
+                    "known_attempts": sum((request.get("usage") or {}).get(key) is not None
+                                          for request in requests),
+                    "total_attempts": len(requests)})
+            else:
+                recorded = (session.get("usage_coverage") or {}).get(key)
+                # Legacy sessions without request evidence retain the original
+                # one-attempt interpretation; never apply it to modern retries.
+                request_counts.append(recorded if recorded is not None else {
+                    "known_attempts": int((session.get("usage") or {}).get(key) is not None),
+                    "total_attempts": 1})
+        coverage[key] = {name: sum(count[name] for count in request_counts)
+                         for name in ("known_attempts", "total_attempts")}
     result.update(usage=usage, known_usage=known_usage, usage_coverage=coverage)
     costs = [attempt.get("cost_usd") for attempt in attempts]
     partial_costs = [attempt.get("known_cost_usd") for attempt in attempts]
