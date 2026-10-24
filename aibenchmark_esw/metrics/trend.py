@@ -63,9 +63,13 @@ def trend_runs(reports, regression_threshold=0.0):
                     task_sequences[result['task_id']].append(generation_sequence(result.get('generation') or {}))
             task_sequences = {task_id: sorted(values, key=json.dumps)
                               for task_id, values in sorted(task_sequences.items())}
+            # Identical independent samples add coverage, not a new model
+            # identity. Keep multiplicity when a task used mixed pipelines.
+            model_sequences = {task_id: values[:1] if len(set(values)) == 1 else values
+                               for task_id, values in task_sequences.items()}
             sequences = sorted({sequence for values in task_sequences.values() for sequence in values}, key=json.dumps)
             model_key = (report['model_name'], json.dumps(generation_conditions(metadata), sort_keys=True),
-                         json.dumps(task_sequences, sort_keys=True))
+                         json.dumps(model_sequences, sort_keys=True))
             scores = {row['task_id']: row['total'] for row in checked['task_rows']}
             last = previous.get(model_key)
             regressions = []
@@ -76,6 +80,7 @@ def trend_runs(reports, regression_threshold=0.0):
                         regressions.append({'task_id': task_id, 'delta': delta, 'previous_run_id':last['run_id']})
             row = {'run_id':metadata['run_id'], 'created_at_utc':metadata['created_at_utc'], 'model':report['model_name'],
                    'source_revision':metadata.get('source_revision'), 'score':checked['models'][0]['score'],
+                   'sample_count':len(report.get('samples') or [report]),
                    'task_scores':scores, 'regressions':regressions, 'generation_settings':generation_conditions(metadata),
                    'resolved_model_sequences': [list(sequence) for sequence in sequences],
                    'resolved_model_sequences_by_task': {task_id: [list(sequence) for sequence in values]
@@ -96,7 +101,7 @@ def render_trend(summary, format_name='markdown'):
         return summary_html('Benchmark history', rows, summary)
     if format_name == 'csv':
         stream=io.StringIO(newline='')
-        fields=['compatibility_sha256','run_id','created_at_utc','model','source_revision','score','task_scores','regressions','generation_settings','resolved_model_sequences','resolved_model_sequences_by_task']
+        fields=['compatibility_sha256','run_id','created_at_utc','model','source_revision','score','sample_count','task_scores','regressions','generation_settings','resolved_model_sequences','resolved_model_sequences_by_task']
         writer=csv.DictWriter(stream,fieldnames=fields,lineterminator='\n')
         writer.writeheader()
         for row in rows:
@@ -107,8 +112,8 @@ def render_trend(summary, format_name='markdown'):
     lines=['# Benchmark history' if format_name=='markdown' else 'Benchmark history', '',
            'Runs are compared only within matching dataset and evaluator conditions.']
     for group in summary['groups']:
-        lines += ['', 'Compatibility group: '+group['compatibility_sha256'], '| UTC | Model | Run | Score | Regression |','| :--- | :--- | :--- | ---: | :--- |']
+        lines += ['', 'Compatibility group: '+group['compatibility_sha256'], '| UTC | Model | Run | Samples | Score | Regression |','| :--- | :--- | :--- | ---: | ---: | :--- |']
         for row in group['runs']:
-            cells=[row['created_at_utc'],row['model'],row['run_id'],f"{row['score']:.2f}",json.dumps(row['regressions'])]
+            cells=[row['created_at_utc'],row['model'],row['run_id'],str(row['sample_count']),f"{row['score']:.2f}",json.dumps(row['regressions'])]
             lines.append('| '+' | '.join(markdown_text(cell) for cell in cells)+' |')
     return '\n'.join(lines)
