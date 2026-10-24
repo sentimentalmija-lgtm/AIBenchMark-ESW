@@ -80,7 +80,7 @@ def evaluate_task(task: TaskConfig, solution_code: str, reference_code: Optional
                 size.measured = False
                 errors.append(f"Memory analysis failed: {error}")
 
-        source = test_dir / Path(task.entry_file).name
+        source = test_dir / "candidate.c"
         safety = (analyzer or StaticAnalyzer()).analyze(source, [task.task_dir / "include"],
                                                        comp.effective_standard or task.target_standard,
                                                        executor=executor)
