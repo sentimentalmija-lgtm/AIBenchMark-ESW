@@ -273,8 +273,8 @@ def _target_task(task: TaskConfig, args) -> TaskConfig:
     return task
 
 
-def _new_client(args):
-    key_env = getattr(args, 'api_key_env', None)
+def _new_client(args, *, offline=False):
+    key_env = None if offline else getattr(args, 'api_key_env', None)
     api_key = os.environ.get(key_env) if key_env else None
     if key_env and not api_key:
         raise ValueError(f'Provider key environment variable is empty: {key_env}')
@@ -729,7 +729,7 @@ def _cmd_run_once(args: argparse.Namespace) -> int:
 
 def _dry_run(args, loader, tasks, system_prompt):
     from aibenchmark_esw.llm.costs import pricing, token_upper_bound
-    client = _new_client(args)
+    client = _new_client(args, offline=True)
     try:
         import litellm as provider
     except ImportError:

@@ -244,7 +244,11 @@ cannot be counted as independent model samples. HTML exports contain their own
 scripts/styles and no external services. SARIF locations include only known
 positive line numbers. Comparison JUnit creates threshold-based regression
 failures; trend history groups incompatible fingerprints instead of ranking
-them together. Every file export protects source inputs and output ancestors.
+them together. Trend compares matching per-task model pipeline proportions
+across different sample counts, while preserving generation turn order and
+distinguishing changed model mixtures or task assignments. Each history row
+records sample and task-attempt counts; raw per-task model sequences retain
+every contributing sample. Every file export protects source inputs and output ancestors.
 
 ## Optional execution and dataset checks
 

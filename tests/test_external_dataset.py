@@ -26,6 +26,41 @@ def working_directory(path):
 
 
 class TestExternalDataset(unittest.TestCase):
+    def test_external_entry_names_cannot_collide_with_generated_harness(self):
+        base = DatasetLoader().get_task("tier1_crc16")
+        names = ("crc16.c", "aibenchmark_tests_0.c", "AIBENCHMARK_TESTS_0.c",
+                 "unity.c", "candidate.c")
+        for name in names:
+            with self.subTest(entry_name=name), TemporaryDirectory() as directory:
+                root = Path(directory) / "tasks"
+                task_dir = root / base.id
+                shutil.copytree(base.task_dir, task_dir)
+                metadata = task_dir / "task.json"
+                config = json.loads(metadata.read_text(encoding="utf-8"))
+                original = task_dir / config["entry_file"]
+                starter = original.read_bytes()
+                entry = original.with_name(name)
+                if entry != original:
+                    original.rename(entry)
+                config["entry_file"] = entry.relative_to(task_dir).as_posix()
+                metadata.write_text(json.dumps(config), encoding="utf-8")
+                report = Path(directory) / "report.json"
+                args = cli.build_parser().parse_args([
+                    "eval", "--tasks-root", str(root), "--task", base.id,
+                    "--reference", "--output", str(report),
+                ])
+                with redirect_stdout(io.StringIO()) as output, redirect_stderr(output):
+                    status = cli.cmd_eval(args)
+                self.assertEqual(status, 0, output.getvalue())
+                results = BenchmarkReporter.from_json_dict(json.loads(report.read_text(encoding="utf-8")))
+                self.assertEqual(len(results), 1)
+                self.assertTrue(results[0].compiled, results[0].error_log)
+                self.assertTrue(results[0].test_result.passed, results[0].test_result.output)
+                self.assertEqual(results[0].test_result.passed_tests, 7)
+                self.assertEqual(results[0].scores.total_score, 100)
+                self.assertIsNone(results[0].error_log)
+                self.assertEqual(entry.read_bytes(), starter)
+
     def test_external_tasks_support_list_eval_run_and_content_provenance(self):
         # Windows runners can place the checkout and temp files on different
         # drives. Run from the temp parent to exercise a valid relative root.

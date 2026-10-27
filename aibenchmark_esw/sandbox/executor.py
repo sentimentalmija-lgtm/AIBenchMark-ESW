@@ -371,7 +371,8 @@ class ExecutionSandbox:
             if not tests:
                 message = f"No test_*.c found in {task.task_dir / 'tests'}"
                 return CompilationResult(False, message), TestResult(output=message, completed=False)
-            sol_file = work_dir / Path(task.entry_file).name
+            # Dataset filenames must never alias generated harness sources.
+            sol_file = work_dir / "candidate.c"
             sol_file.write_text(solution_code, encoding="utf-8")
             completion_token = uuid.uuid4().hex
             wrapped_tests = []

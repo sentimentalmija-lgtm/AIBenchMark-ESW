@@ -352,3 +352,30 @@ class ExportServiceTests(unittest.TestCase):
         self.assertEqual(rows[2]['regressions'], [])
         self.assertEqual(rows[0]['resolved_model_sequences_by_task'],
                          {'one': [['A'], ['A'], ['B']]})
+
+    def test_trend_compares_uniform_collections_with_different_sample_counts(self):
+        from aibenchmark_esw.metrics.trend import trend_runs
+        from aibenchmark_esw.sampling import sampling_statistics
+
+        def collection(run_id, scores, day):
+            samples = [fixture_report(score, run_id=f'{run_id}-{index}')
+                       for index, score in enumerate(scores)]
+            report = copy.deepcopy(samples[0])
+            report['metadata'].update(run_id=run_id, created_at_utc=f'2026-10-0{day}T00:00:00Z')
+            report['samples'] = samples
+            report['sampling'] = {'requested': len(samples), 'completed': len(samples),
+                                  'pending': [], 'pass_k': [1],
+                                  'statistics': sampling_statistics(samples, [1])}
+            return report
+
+        old = collection('old', [100, 100], 1)
+        new = collection('new', [0, 0, 0], 2)
+        rows = trend_runs([old, new])['groups'][0]['runs']
+        self.assertEqual([row['sample_count'] for row in rows], [2, 3])
+        self.assertEqual(rows[1]['regressions'], [
+            {'task_id': 'one', 'delta': -100.0, 'previous_run_id': 'old'}])
+        new['samples'] = new['samples'][:2]
+        new['sampling']['requested'] = new['sampling']['completed'] = 2
+        new['sampling']['statistics'] = sampling_statistics(new['samples'], [1])
+        rows = trend_runs([old, new])['groups'][0]['runs']
+        self.assertEqual(rows[1]['regressions'][0]['delta'], -100.0)
