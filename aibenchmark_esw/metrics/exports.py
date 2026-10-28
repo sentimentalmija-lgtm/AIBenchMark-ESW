@@ -24,7 +24,7 @@ input,select{padding:8px;margin:8px}tr[hidden]{display:none} .score{min-width:10
 </style></head><body><h1>''' + _escape(title) + '''</h1>
 <label>Filter <input id="filter" type="search" aria-label="Filter rows"></label>
 ''' + ('''
-<label>Status <select id="status"><option value="">All</option><option>PASS</option><option>FAIL</option><option>INCOMPLETE</option></select></label>
+<label>Status <select id="status"><option value="">All</option><option>PASS</option><option>FAIL</option><option>INCOMPLETE</option><option>ERROR</option></select></label>
 <label>Tier <select id="tier"><option value="">All</option><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
 <label>Category <select id="category"><option value="">All</option></select></label>
 ''' if task_filters else '') + '''
@@ -52,6 +52,8 @@ def report_html(results, model_name, metadata=None):
     rows = []
     for result in results:
         status = 'INCOMPLETE' if not result.test_result.completed else 'PASS' if BenchmarkReporter._all_tests_passed(result) else 'FAIL'
+        if status == 'PASS' and result.error_log:
+            status = 'ERROR'
         category = ((metadata or {}).get('task_categories') or {}).get(result.task_id, 'Unknown (legacy report)')
         values = [result.task_id, result.tier, category, status, BenchmarkReporter._standard(result), BenchmarkReporter._task_weights(result)]
         cells = ['<td>' + _escape(value) + '</td>' for value in values]
