@@ -35,6 +35,13 @@ def _xml_text(value):
     return re.sub(r"[^\x09\x0a\x0d\x20-\ud7ff\ue000-\ufffd\U00010000-\U0010ffff]", "", str(value))
 
 
+def _xml_identity(value):
+    """Keep XML-invalid characters distinct from absent or literal escapes."""
+    text = str(value).replace('%', '%25')
+    return re.sub(r"[^\x09\x0a\x0d\x20-\ud7ff\ue000-\ufffd\U00010000-\U0010ffff]",
+                  lambda match: f'%{ord(match.group()):06X}', text)
+
+
 def render_junit(results, model_name, metadata=None):
     """Render functional outcomes and evaluation errors; pending tasks are skipped.
 
@@ -54,9 +61,11 @@ def render_junit(results, model_name, metadata=None):
         elapsed += duration
         provenance = result.provenance or {}
         sample_id = provenance.get('sample_run_id')
-        classname = model_name if sample_id is None else f'{model_name} [sample={quote(sample_id, safe="")}]'
-        case = ET.SubElement(suite, "testcase", name=_xml_text(result.task_id),
-                             classname=_xml_text(classname), time=f"{duration:.6f}")
+        classname = _xml_identity(model_name)
+        if sample_id is not None:
+            classname += f' [sample={quote(sample_id, safe="")}]'
+        case = ET.SubElement(suite, "testcase", name=_xml_identity(result.task_id),
+                             classname=classname, time=f"{duration:.6f}")
         props = ET.SubElement(case, "properties")
         if sample_id is not None:
             for key, value in (('task_id', result.task_id), ('sample_run_id', sample_id),

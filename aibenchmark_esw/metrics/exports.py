@@ -5,7 +5,7 @@ import json
 import math
 from xml.etree import ElementTree as ET
 
-from aibenchmark_esw.metrics.junit import _xml_text
+from aibenchmark_esw.metrics.junit import _xml_identity, _xml_text
 
 
 def _escape(value):
@@ -129,7 +129,7 @@ def comparison_junit(comparison, baseline_model=None, regression_threshold=0.0):
     suite = ET.Element('testsuite', name='AIBenchMark-ESW comparison', tests=str(len(comparison['task_rows'])))
     failures = 0
     for row in comparison['task_rows']:
-        case = ET.SubElement(suite, 'testcase', classname=_xml_text(row['model']), name=_xml_text(row['task_id']))
+        case = ET.SubElement(suite, 'testcase', classname=_xml_identity(row['model']), name=_xml_identity(row['task_id']))
         delta = row['total'] - baseline[row['task_id']]['total']
         text = f'Score {row["total"]:g}; baseline {baseline_model} {baseline[row["task_id"]]["total"]:g}; delta {delta:g}; threshold {regression_threshold:g}'
         if delta < -regression_threshold:
@@ -142,7 +142,7 @@ def comparison_junit(comparison, baseline_model=None, regression_threshold=0.0):
     # Reserve the identities actually emitted after XML text normalization.
     identities = {(case.get('classname'), case.get('name')) for case in suite.findall('testcase')}
     for row in paired['comparisons']:
-        classname, name = _xml_text(row['model']), 'paired-task-statistics'
+        classname, name = _xml_identity(row['model']), 'paired-task-statistics'
         suffix = 1
         while (classname, name) in identities:
             name = f'paired-task-statistics-{suffix}'

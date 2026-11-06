@@ -20,6 +20,12 @@ aibenchmark-esw compare --results results/baseline.json results/candidate.json \
 
 The default JUnit baseline is the highest-scoring comparison model. Choose `--baseline-model` explicitly for CI policy. The threshold is an absolute score-point delta, not a relative percentage.
 
+JUnit testcase identities preserve XML-invalid model/task characters as `%`
+followed by six uppercase hexadecimal digits, and literal `%` as `%25`.
+Ordinary names remain unchanged. This prevents distinct labels from collapsing
+when XML display diagnostics remove unsupported characters. Sample IDs retain
+their existing URL-encoded identity suffixes.
+
 ## Regrade a saved candidate set
 
 ```sh
