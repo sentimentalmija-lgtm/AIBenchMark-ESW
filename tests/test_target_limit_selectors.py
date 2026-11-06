@@ -13,7 +13,10 @@ class TestTargetLimitSelectors(unittest.TestCase):
     def test_invalid_selectors_are_rejected_by_strict_and_diagnostic_loading(self):
         for selector in ('arm:cortex-mO', 'arm:banana', 'arm:', 'cortex-m2', 'rv32banana', ''):
             with self.subTest(selector=selector), TemporaryDirectory() as directory:
-                root = Path(directory)
+                # Exercise the same canonicalization as /var -> /private/var
+                # and Windows short temporary paths on every platform.
+                (Path(directory) / 'alias').mkdir()
+                root = Path(directory) / 'alias' / '..'
                 task = root / 'external'
                 task.mkdir()
                 data = {'id': 'external', 'limits': {'targets': {selector: {'max_flash_bytes': 1}}}}
@@ -22,7 +25,7 @@ class TestTargetLimitSelectors(unittest.TestCase):
                     DatasetLoader(root)
                 loader = DatasetLoader(root, strict=False)
                 self.assertEqual(loader.list_tasks(), [])
-                self.assertIn('limits.targets', loader.load_errors[str(task)])
+                self.assertIn('limits.targets', loader.load_errors[str(task.resolve())])
 
     def test_valid_full_and_shorthand_selectors_apply_without_a_compiler(self):
         for target in ('arm:cortex-m0', 'arm:cortex-m0plus', 'arm:cortex-m85',
