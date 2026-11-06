@@ -195,6 +195,7 @@ class TestResult:
     passed: bool = False
     completed: bool = False
     returncode: Optional[int] = None
+    output_truncated: bool = False
 
 
 @dataclass
@@ -255,6 +256,7 @@ class TaskEvaluationResult:
     stack_usage: Optional[dict[str, Any]] = None
 
     def to_dict(self) -> dict[str, Any]:
+        test_output = self.test_result.output.encode('utf-8')
         return {
             "task_id": self.task_id,
             "tier": self.tier,
@@ -268,6 +270,8 @@ class TaskEvaluationResult:
                 "all_passed": self.test_result.passed,
                 "completed": self.test_result.completed,
                 "returncode": self.test_result.returncode,
+                "output": test_output[:65536].decode('utf-8', errors='ignore'),
+                "output_truncated": self.test_result.output_truncated or len(test_output) > 65536,
             },
             "size_metrics": {
                 "flash_bytes": self.size_metrics.flash_bytes,

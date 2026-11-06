@@ -69,6 +69,10 @@ def validate_task_result(item, default_model):
         raise ValueError("tier must be an integer from 1 to 4")
     compiled = _bool(item.get("compiled"), "compiled")
     tests = _object(item.get("test_result"), "test_result")
+    output = tests.get('output', '')
+    if not isinstance(output, str) or len(output.encode('utf-8')) > 65536:
+        raise ValueError('test_result.output must be UTF-8 text of at most 65536 bytes')
+    _bool(tests.get('output_truncated', False), 'test_result.output_truncated')
     total = _count(tests.get("total"), "test_result.total")
     passed = _count(tests.get("passed"), "test_result.passed")
     failed = _count(tests.get("failed"), "test_result.failed")

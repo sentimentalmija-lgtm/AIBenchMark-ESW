@@ -2,6 +2,13 @@
 
 All commands below operate on saved reports or local C files. They make no provider requests.
 
+Saved task results include `test_result.output`, capped at 64 KiB of UTF-8 text,
+and `test_result.output_truncated`. Offline HTML shows both in diagnostics.
+The execution-time `--max-output-bytes` limit still applies; the saved-output
+cap is an additional report-size bound. Older reports without these fields
+load with empty output and no truncation marker. The cap does not shorten
+in-memory test output or replace the separate evaluation `error_log`.
+
 ```sh
 aibenchmark-esw report --results results/run.json --format html > report.html
 aibenchmark-esw report --results results/run.json --format sarif > findings.sarif

@@ -68,6 +68,7 @@ def report_html(results, model_name, metadata=None):
             cells.append('<td>' + _escape(text) + (f'<meter min="0" max="{max(budget, value, 1)}" value="{value}"></meter>' if budget is not None and result.size_metrics.measured else '') + '</td>')
         cells.append(f'<td data-value="{result.execution_time_sec}">{result.execution_time_sec:.3f}s</td>')
         details = {'compiler/test diagnostics': result.error_log, 'test output': result.test_result.output,
+                   'test output truncated': result.test_result.output_truncated,
                    'stack usage (per-function compiler evidence)': result.stack_usage,
                    'static analysis': result.safety_metrics.__dict__, 'generation': result.generation, 'provenance': result.provenance}
         cells.append('<td><details><summary>Diagnostics and provenance</summary><pre>' + _escape(json.dumps(details, indent=2, default=str)) + '</pre></details></td>')
