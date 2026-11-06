@@ -35,7 +35,8 @@ class CrossCompiler:
         if not selected:
             raise ValueError(f"Cross compiler unavailable: install {command}/Clang or set AIBENCHMARK_ESW_CROSS_CC")
         self.compiler = str(Path(selected).resolve()) if Path(selected).is_file() else selected
-        if self.cpu.startswith("rv64") and "riscv32" in Path(self.compiler).stem:
+        compiler_name = Path(self.compiler).stem.lower()
+        if self.cpu.startswith("rv64") and "riscv32" in compiler_name:
             raise ValueError("RV64 target requires an RV64-capable toolchain; selected riscv32 compiler")
         self.warning_flags = ["-Wall", "-Wextra", "-Wconversion", "-Wshadow"] if warnings else []
         self.finding_parser = finding_parser
@@ -43,11 +44,11 @@ class CrossCompiler:
         if architecture == "riscv":
             self.abi = ("ilp32e" if self.cpu == "rv32ec" else "ilp32" if self.cpu.startswith("rv32")
                         else "lp64d" if self.cpu == "rv64gc" else "lp64")
-            self.flags = (["--target=riscv" + self.cpu[2:4] + "-unknown-elf"] if "clang" in Path(selected).stem else [])
+            self.flags = (["--target=riscv" + self.cpu[2:4] + "-unknown-elf"] if "clang" in compiler_name else [])
             self.flags += [f"-march={self.cpu}", f"-mabi={self.abi}"]
         else:
             self.flags = (["--target=avr", f"-mmcu={self.cpu}"] if architecture == "avr" else
-                      ["--target=arm-none-eabi", f"-mcpu={self.cpu}", "-mthumb"]) if "clang" in Path(selected).stem else (
+                      ["--target=arm-none-eabi", f"-mcpu={self.cpu}", "-mthumb"]) if "clang" in compiler_name else (
                       [f"-mmcu={self.cpu}"] if architecture == "avr" else [f"-mcpu={self.cpu}", "-mthumb"])
         self.flags += ["-Os", "-ffreestanding"]
         try:
