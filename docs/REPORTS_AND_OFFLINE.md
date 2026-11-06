@@ -2,6 +2,13 @@
 
 All commands below operate on saved reports or local C files. They make no provider requests.
 
+Saved task results include `test_result.output`, capped at 64 KiB of UTF-8 text,
+and `test_result.output_truncated`. Offline HTML shows both in diagnostics.
+The execution-time `--max-output-bytes` limit still applies; the saved-output
+cap is an additional report-size bound. Older reports without these fields
+load with empty output and no truncation marker. The cap does not shorten
+in-memory test output or replace the separate evaluation `error_log`.
+
 ```sh
 aibenchmark-esw report --results results/run.json --format html > report.html
 aibenchmark-esw report --results results/run.json --format sarif > findings.sarif
@@ -19,6 +26,12 @@ aibenchmark-esw compare --results results/baseline.json results/candidate.json \
 ```
 
 The default JUnit baseline is the highest-scoring comparison model. Choose `--baseline-model` explicitly for CI policy. The threshold is an absolute score-point delta, not a relative percentage.
+
+JUnit testcase identities preserve XML-invalid model/task characters as `%`
+followed by six uppercase hexadecimal digits, and literal `%` as `%25`.
+Ordinary names remain unchanged. This prevents distinct labels from collapsing
+when XML display diagnostics remove unsupported characters. Sample IDs retain
+their existing URL-encoded identity suffixes.
 
 ## Regrade a saved candidate set
 

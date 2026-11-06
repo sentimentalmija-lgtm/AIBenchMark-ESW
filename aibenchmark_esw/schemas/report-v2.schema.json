@@ -290,7 +290,9 @@
                   "integer",
                   "null"
                 ]
-              }
+              },
+              "output": {"type": "string", "maxLength": 65536},
+              "output_truncated": {"type": "boolean"}
             },
             "required": [
               "total",

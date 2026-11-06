@@ -217,6 +217,7 @@ class BenchmarkReporter:
                     failed_tests=tests["failed"], ignored_tests=tests.get("ignored", 0),
                     passed=tests["all_passed"], completed=tests.get("completed", tests["total"] > 0),
                     returncode=tests.get("returncode"),
+                    output=tests.get("output", ""), output_truncated=tests.get("output_truncated", False),
                 ),
                 size_metrics=SizeMetrics(**size), safety_metrics=StaticSafetyMetrics(**safety),
                 scores=DimensionScores(scores["functional"], scores["memory"],

@@ -179,7 +179,9 @@ being overwritten. System prompt files and per-task prompt overrides are hashed.
 
 `--target arm:cortex-m0 --cross-compiler clang` and `--target avr:atmega328p`
 compile target objects while tests run on the host. Default limits may be overridden
-by `limits.targets["arm:cortex-m0"]` or CPU key `cortex-m0`; effective budgets,
+by `limits.targets["arm:cortex-m0"]` or CPU key `cortex-m0`; selector names are
+validated against the execution target syntax without requiring a compiler.
+Unsupported selectors are configuration errors rather than ignored overrides. Effective budgets,
 compiler/flags and target are recorded and rendered. Mixed targets cannot be
 ranked together. ELF allocated non-NOBITS sections count as Flash; writable and
 NOBITS sections count as RAM, including architecture-specific allocated sections.

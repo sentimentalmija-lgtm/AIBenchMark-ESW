@@ -1,10 +1,10 @@
 {
   "schema_version": 2,
   "metadata": {
-    "run_id": "fc2689033ddb47268a3f72691c620ae7",
-    "created_at_utc": "2026-11-04T12:57:19.706596+00:00",
+    "run_id": "e4161183943040d9b8fa0d1fc7643cd4",
+    "created_at_utc": "2026-11-06T12:18:21.632661+00:00",
     "benchmark_version": "0.1.0",
-    "evaluator_sha256": "c71e0ebe2bc5dec9e3677730e1f502e48a96ced1ca37fe0b7178fdecea9dd017",
+    "evaluator_sha256": "51531c401afb590639ce3de5f5c888c5bebf4197aefe72d5acee7bf1357dbfe4",
     "python_version": "3.11.15",
     "platform": {
       "system": "Windows",
@@ -61,7 +61,7 @@
         ]
       }
     },
-    "source_revision": "c292c7612c73b1be547f5e2d7748eafac38692fc",
+    "source_revision": "c3cff2f8a773bd70b155be847c6a3356c2f77547",
     "source_dirty": false,
     "selected_tasks": [
       "tier1_crc16",
@@ -382,7 +382,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:91:test_standard_test_vector:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:92:test_empty_buffer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:93:test_null_buffer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:94:test_single_byte_and_stepwise_update:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:95:test_all_zeros_and_ones:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:96:test_every_binary_byte_and_streaming_state:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:97:test_lengths_at_and_beyond_uint16_limit:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:c57ecbb823a243719468912736e3c62d:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 361,
@@ -405,7 +407,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.393,
+      "execution_time_sec": 0.352,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -426,8 +428,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.3934159999998883,
-      "reference_validation_time_sec": 0.03941870000016934,
+      "candidate_time_sec": 0.35182420000001,
+      "reference_validation_time_sec": 0.036719099999999116,
       "footprint_target": "host"
     },
     {
@@ -442,372 +444,14 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:119:test_add_ordinary:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:120:test_add_positive_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:121:test_add_negative_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:122:test_add_mixed_extremes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:123:test_sub_ordinary:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:124:test_sub_positive_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:125:test_sub_negative_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:126:test_sub_equal_extremes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:127:test_mul_zero:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:128:test_mul_positive_fractions:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:129:test_mul_signs:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:130:test_mul_negative_one_squared_saturates:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:131:test_mul_extreme_products:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:132:test_mul_truncates_toward_zero:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:133:test_mul_one_raw_unit_boundaries:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:134:test_all_raw_values_obey_identity_and_scaling:PASS\r\n-----------------------\r\n16 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:5629885932ab41e296a1b917cb196cd8:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 270,
         "ram_bytes": 0,
         "ref_flash_bytes": 270,
-        "ref_ram_bytes": 0,
-        "measured": true
-      },
-      "safety_metrics": {
-        "error_count": 0,
-        "warning_count": 0,
-        "violations": [],
-        "cppcheck_status": "disabled",
-        "cppcheck_diagnostic": null,
-        "findings": []
-      },
-      "scores": {
-        "functional": 100.0,
-        "memory": 100.0,
-        "safety": 100.0,
-        "total": 100.0
-      },
-      "execution_time_sec": 0.316,
-      "error_log": null,
-      "weights": {
-        "functional": 0.6,
-        "memory": 0.2,
-        "safety": 0.2
-      },
-      "target_standard": "c99",
-      "effective_standard": "c99",
-      "generation": null,
-      "provenance": {
-        "reference_cache_hit": false,
-        "task_sha256": "4a31d147057151bcd018aa421cb849d57b2fc93e752b4d165763287c07e1091f",
-        "candidate_sha256": "77d1452e3053e02bda883205d268005d490f938b02f7be2696386e100923bae6",
-        "prompt_sha256": null
-      },
-      "limits": {
-        "max_flash_bytes": 1024,
-        "max_ram_bytes": 0,
-        "timeout_seconds": 5
-      },
-      "candidate_time_sec": 0.3158258000003116,
-      "reference_validation_time_sec": 0.034679800000049,
-      "footprint_target": "host"
-    },
-    {
-      "task_id": "tier1_ring_buffer",
-      "tier": 1,
-      "model_name": "baseline",
-      "compiled": true,
-      "test_result": {
-        "total": 11,
-        "passed": 11,
-        "failed": 0,
-        "ignored": 0,
-        "all_passed": true,
-        "completed": true,
-        "returncode": 0
-      },
-      "size_metrics": {
-        "flash_bytes": 1474,
-        "ram_bytes": 0,
-        "ref_flash_bytes": 1474,
-        "ref_ram_bytes": 0,
-        "measured": true
-      },
-      "safety_metrics": {
-        "error_count": 0,
-        "warning_count": 0,
-        "violations": [],
-        "cppcheck_status": "disabled",
-        "cppcheck_diagnostic": null,
-        "findings": []
-      },
-      "scores": {
-        "functional": 100.0,
-        "memory": 100.0,
-        "safety": 100.0,
-        "total": 100.0
-      },
-      "execution_time_sec": 0.314,
-      "error_log": null,
-      "weights": {
-        "functional": 0.6,
-        "memory": 0.2,
-        "safety": 0.2
-      },
-      "target_standard": "c99",
-      "effective_standard": "c99",
-      "generation": null,
-      "provenance": {
-        "reference_cache_hit": false,
-        "task_sha256": "750efc2fcd6fc186e414a6e470ac1e75fded4432d4e0d2133637b48ac5fa5fb4",
-        "candidate_sha256": "fb3a5b2b6042401d1e9e830334b67bd6283e361380feb453cd4fee2387d14164",
-        "prompt_sha256": null
-      },
-      "limits": {
-        "max_flash_bytes": 2048,
-        "max_ram_bytes": 128,
-        "timeout_seconds": 5
-      },
-      "candidate_time_sec": 0.31393280000065715,
-      "reference_validation_time_sec": 0.03467289999935019,
-      "footprint_target": "host"
-    },
-    {
-      "task_id": "tier2_can_frame",
-      "tier": 2,
-      "model_name": "baseline",
-      "compiled": true,
-      "test_result": {
-        "total": 15,
-        "passed": 15,
-        "failed": 0,
-        "ignored": 0,
-        "all_passed": true,
-        "completed": true,
-        "returncode": 0
-      },
-      "size_metrics": {
-        "flash_bytes": 2600,
-        "ram_bytes": 0,
-        "ref_flash_bytes": 2600,
-        "ref_ram_bytes": 0,
-        "measured": true
-      },
-      "safety_metrics": {
-        "error_count": 0,
-        "warning_count": 0,
-        "violations": [],
-        "cppcheck_status": "disabled",
-        "cppcheck_diagnostic": null,
-        "findings": []
-      },
-      "scores": {
-        "functional": 100.0,
-        "memory": 100.0,
-        "safety": 100.0,
-        "total": 100.0
-      },
-      "execution_time_sec": 0.337,
-      "error_log": null,
-      "weights": {
-        "functional": 0.6,
-        "memory": 0.2,
-        "safety": 0.2
-      },
-      "target_standard": "c99",
-      "effective_standard": "c99",
-      "generation": null,
-      "provenance": {
-        "reference_cache_hit": false,
-        "task_sha256": "6c968b097ac50661e4b2dc6cbba078d03dc650f2783e3f60f47dca1d3710b4a7",
-        "candidate_sha256": "6644ed6a1f53afb563fc9b66a0876ef92a653950974fb913457b4d1fd975d678",
-        "prompt_sha256": null
-      },
-      "limits": {
-        "max_flash_bytes": 8192,
-        "max_ram_bytes": 256,
-        "timeout_seconds": 5
-      },
-      "candidate_time_sec": 0.3370988999995461,
-      "reference_validation_time_sec": 0.03507160000026488,
-      "footprint_target": "host"
-    },
-    {
-      "task_id": "tier2_cobs_codec",
-      "tier": 2,
-      "model_name": "baseline",
-      "compiled": true,
-      "test_result": {
-        "total": 9,
-        "passed": 9,
-        "failed": 0,
-        "ignored": 0,
-        "all_passed": true,
-        "completed": true,
-        "returncode": 0
-      },
-      "size_metrics": {
-        "flash_bytes": 1186,
-        "ram_bytes": 0,
-        "ref_flash_bytes": 1186,
-        "ref_ram_bytes": 0,
-        "measured": true
-      },
-      "safety_metrics": {
-        "error_count": 0,
-        "warning_count": 0,
-        "violations": [],
-        "cppcheck_status": "disabled",
-        "cppcheck_diagnostic": null,
-        "findings": []
-      },
-      "scores": {
-        "functional": 100.0,
-        "memory": 100.0,
-        "safety": 100.0,
-        "total": 100.0
-      },
-      "execution_time_sec": 0.326,
-      "error_log": null,
-      "weights": {
-        "functional": 0.6,
-        "memory": 0.2,
-        "safety": 0.2
-      },
-      "target_standard": "c99",
-      "effective_standard": "c99",
-      "generation": null,
-      "provenance": {
-        "reference_cache_hit": false,
-        "task_sha256": "e0d8e38ac017a140dafb44659d93e15cc56486d29f04788d4c17d17f0f99ceeb",
-        "candidate_sha256": "75fe4540625a980305994bbb1c47da690c72819b2531f3e72379e6571d98b560",
-        "prompt_sha256": null
-      },
-      "limits": {
-        "max_flash_bytes": 2048,
-        "max_ram_bytes": 0,
-        "timeout_seconds": 5
-      },
-      "candidate_time_sec": 0.3260737999999037,
-      "reference_validation_time_sec": 0.03968799999984185,
-      "footprint_target": "host"
-    },
-    {
-      "task_id": "tier2_debounce_fsm",
-      "tier": 2,
-      "model_name": "baseline",
-      "compiled": true,
-      "test_result": {
-        "total": 7,
-        "passed": 7,
-        "failed": 0,
-        "ignored": 0,
-        "all_passed": true,
-        "completed": true,
-        "returncode": 0
-      },
-      "size_metrics": {
-        "flash_bytes": 1134,
-        "ram_bytes": 0,
-        "ref_flash_bytes": 1134,
-        "ref_ram_bytes": 0,
-        "measured": true
-      },
-      "safety_metrics": {
-        "error_count": 0,
-        "warning_count": 0,
-        "violations": [],
-        "cppcheck_status": "disabled",
-        "cppcheck_diagnostic": null,
-        "findings": []
-      },
-      "scores": {
-        "functional": 100.0,
-        "memory": 100.0,
-        "safety": 100.0,
-        "total": 100.0
-      },
-      "execution_time_sec": 0.325,
-      "error_log": null,
-      "weights": {
-        "functional": 0.6,
-        "memory": 0.2,
-        "safety": 0.2
-      },
-      "target_standard": "c99",
-      "effective_standard": "c99",
-      "generation": null,
-      "provenance": {
-        "reference_cache_hit": false,
-        "task_sha256": "56a6cf42788072f4a5d8f763fe9b8af0a949105b467429f39393b78d5c15ede3",
-        "candidate_sha256": "2f2623c7abfec0ce13c3d1f3502e843ef7253e4962e798056d52306bf8e9c730",
-        "prompt_sha256": null
-      },
-      "limits": {
-        "max_flash_bytes": 1536,
-        "max_ram_bytes": 128,
-        "timeout_seconds": 5
-      },
-      "candidate_time_sec": 0.3248243000007278,
-      "reference_validation_time_sec": 0.03747380000004341,
-      "footprint_target": "host"
-    },
-    {
-      "task_id": "tier2_fixed_control",
-      "tier": 2,
-      "model_name": "baseline",
-      "compiled": true,
-      "test_result": {
-        "total": 7,
-        "passed": 7,
-        "failed": 0,
-        "ignored": 0,
-        "all_passed": true,
-        "completed": true,
-        "returncode": 0
-      },
-      "size_metrics": {
-        "flash_bytes": 941,
-        "ram_bytes": 0,
-        "ref_flash_bytes": 941,
-        "ref_ram_bytes": 0,
-        "measured": true
-      },
-      "safety_metrics": {
-        "error_count": 0,
-        "warning_count": 0,
-        "violations": [],
-        "cppcheck_status": "disabled",
-        "cppcheck_diagnostic": null,
-        "findings": []
-      },
-      "scores": {
-        "functional": 100.0,
-        "memory": 100.0,
-        "safety": 100.0,
-        "total": 100.0
-      },
-      "execution_time_sec": 0.321,
-      "error_log": null,
-      "weights": {
-        "functional": 0.6,
-        "memory": 0.2,
-        "safety": 0.2
-      },
-      "target_standard": "c99",
-      "effective_standard": "c99",
-      "generation": null,
-      "provenance": {
-        "reference_cache_hit": false,
-        "task_sha256": "8a029c491576548951695257aa9fa4fa356a6e69576d14b15b126165361796d1",
-        "candidate_sha256": "8817a58885053fc9c2572d3ab5a5c55d1cbf1316308933152c99acc5c8a2c158",
-        "prompt_sha256": null
-      },
-      "limits": {
-        "max_flash_bytes": 2048,
-        "max_ram_bytes": 128,
-        "timeout_seconds": 5
-      },
-      "candidate_time_sec": 0.3209481000003507,
-      "reference_validation_time_sec": 0.03536599999915779,
-      "footprint_target": "host"
-    },
-    {
-      "task_id": "tier2_tick_timer",
-      "tier": 2,
-      "model_name": "baseline",
-      "compiled": true,
-      "test_result": {
-        "total": 16,
-        "passed": 16,
-        "failed": 0,
-        "ignored": 0,
-        "all_passed": true,
-        "completed": true,
-        "returncode": 0
-      },
-      "size_metrics": {
-        "flash_bytes": 636,
-        "ram_bytes": 0,
-        "ref_flash_bytes": 636,
         "ref_ram_bytes": 0,
         "measured": true
       },
@@ -837,6 +481,378 @@
       "generation": null,
       "provenance": {
         "reference_cache_hit": false,
+        "task_sha256": "4a31d147057151bcd018aa421cb849d57b2fc93e752b4d165763287c07e1091f",
+        "candidate_sha256": "77d1452e3053e02bda883205d268005d490f938b02f7be2696386e100923bae6",
+        "prompt_sha256": null
+      },
+      "limits": {
+        "max_flash_bytes": 1024,
+        "max_ram_bytes": 0,
+        "timeout_seconds": 5
+      },
+      "candidate_time_sec": 0.3150237999999774,
+      "reference_validation_time_sec": 0.04214830000000802,
+      "footprint_target": "host"
+    },
+    {
+      "task_id": "tier1_ring_buffer",
+      "tier": 1,
+      "model_name": "baseline",
+      "compiled": true,
+      "test_result": {
+        "total": 11,
+        "passed": 11,
+        "failed": 0,
+        "ignored": 0,
+        "all_passed": true,
+        "completed": true,
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:168:test_init_and_empty:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:169:test_push_and_pop_single:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:170:test_fill_to_capacity_and_is_full:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:171:test_fifo_ordering:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:172:test_wrap_around_continuous:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:173:test_null_pointer_safety:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:174:test_non_power_of_two_capacity_rollover:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:175:test_invalid_storage_and_capacity:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:176:test_capacity_one:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:177:test_forbidden_upper_capacities_preserve_storage:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:178:test_capacity_300_fill_drain_and_wrap:PASS\r\n-----------------------\r\n11 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:90aba649953c435c9fe733bda62b5a11:END\n",
+        "output_truncated": false
+      },
+      "size_metrics": {
+        "flash_bytes": 1474,
+        "ram_bytes": 0,
+        "ref_flash_bytes": 1474,
+        "ref_ram_bytes": 0,
+        "measured": true
+      },
+      "safety_metrics": {
+        "error_count": 0,
+        "warning_count": 0,
+        "violations": [],
+        "cppcheck_status": "disabled",
+        "cppcheck_diagnostic": null,
+        "findings": []
+      },
+      "scores": {
+        "functional": 100.0,
+        "memory": 100.0,
+        "safety": 100.0,
+        "total": 100.0
+      },
+      "execution_time_sec": 0.332,
+      "error_log": null,
+      "weights": {
+        "functional": 0.6,
+        "memory": 0.2,
+        "safety": 0.2
+      },
+      "target_standard": "c99",
+      "effective_standard": "c99",
+      "generation": null,
+      "provenance": {
+        "reference_cache_hit": false,
+        "task_sha256": "750efc2fcd6fc186e414a6e470ac1e75fded4432d4e0d2133637b48ac5fa5fb4",
+        "candidate_sha256": "fb3a5b2b6042401d1e9e830334b67bd6283e361380feb453cd4fee2387d14164",
+        "prompt_sha256": null
+      },
+      "limits": {
+        "max_flash_bytes": 2048,
+        "max_ram_bytes": 128,
+        "timeout_seconds": 5
+      },
+      "candidate_time_sec": 0.33181229999999573,
+      "reference_validation_time_sec": 0.037229899999999816,
+      "footprint_target": "host"
+    },
+    {
+      "task_id": "tier2_can_frame",
+      "tier": 2,
+      "model_name": "baseline",
+      "compiled": true,
+      "test_result": {
+        "total": 15,
+        "passed": 15,
+        "failed": 0,
+        "ignored": 0,
+        "all_passed": true,
+        "completed": true,
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_every_capacity_full_overflow_drain_and_wrap:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_standard_ids_and_little_endian_payload:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_extended_id_boundaries:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_raw_preserves_whole_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_remote_frames_keep_dlc_without_payload:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_zero_and_partial_dlc_zero_unused_bytes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_mask_filter_and_format_matching:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_filters_and_frames:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_queue_initialization_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_fifo_wrap_preserves_order:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_overrun_latches_and_preserves_full_queue:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_empty_pop_preserves_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_dispatch_acceptance_and_rejection:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_dispatch_and_queue_state_are_side_effect_free:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_direct_remote_push_discards_payload:PASS\r\n-----------------------\r\n15 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:41a24c590cfd48d8810da431848bc552:END\n",
+        "output_truncated": false
+      },
+      "size_metrics": {
+        "flash_bytes": 2600,
+        "ram_bytes": 0,
+        "ref_flash_bytes": 2600,
+        "ref_ram_bytes": 0,
+        "measured": true
+      },
+      "safety_metrics": {
+        "error_count": 0,
+        "warning_count": 0,
+        "violations": [],
+        "cppcheck_status": "disabled",
+        "cppcheck_diagnostic": null,
+        "findings": []
+      },
+      "scores": {
+        "functional": 100.0,
+        "memory": 100.0,
+        "safety": 100.0,
+        "total": 100.0
+      },
+      "execution_time_sec": 0.34,
+      "error_log": null,
+      "weights": {
+        "functional": 0.6,
+        "memory": 0.2,
+        "safety": 0.2
+      },
+      "target_standard": "c99",
+      "effective_standard": "c99",
+      "generation": null,
+      "provenance": {
+        "reference_cache_hit": false,
+        "task_sha256": "6c968b097ac50661e4b2dc6cbba078d03dc650f2783e3f60f47dca1d3710b4a7",
+        "candidate_sha256": "6644ed6a1f53afb563fc9b66a0876ef92a653950974fb913457b4d1fd975d678",
+        "prompt_sha256": null
+      },
+      "limits": {
+        "max_flash_bytes": 8192,
+        "max_ram_bytes": 256,
+        "timeout_seconds": 5
+      },
+      "candidate_time_sec": 0.340108100000009,
+      "reference_validation_time_sec": 0.03763280000001146,
+      "footprint_target": "host"
+    },
+    {
+      "task_id": "tier2_cobs_codec",
+      "tier": 2,
+      "model_name": "baseline",
+      "compiled": true,
+      "test_result": {
+        "total": 9,
+        "passed": 9,
+        "failed": 0,
+        "ignored": 0,
+        "all_passed": true,
+        "completed": true,
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:184:test_empty_and_single_byte_vectors:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:185:test_zero_positions_and_mixed_vectors:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:186:test_all_byte_values_known_answer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:187:test_full_block_boundaries_and_canonical_ending:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:188:test_decoder_accepts_full_block_with_optional_empty_group:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:189:test_capacity_failures_preserve_bounds_and_written:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:190:test_null_pointer_contract:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:191:test_malformed_encodings:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:192:test_fixed_seed_roundtrip_and_source_preservation:PASS\r\n-----------------------\r\n9 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:7d4ca2f574e842e98e70892e535dc59a:END\n",
+        "output_truncated": false
+      },
+      "size_metrics": {
+        "flash_bytes": 1186,
+        "ram_bytes": 0,
+        "ref_flash_bytes": 1186,
+        "ref_ram_bytes": 0,
+        "measured": true
+      },
+      "safety_metrics": {
+        "error_count": 0,
+        "warning_count": 0,
+        "violations": [],
+        "cppcheck_status": "disabled",
+        "cppcheck_diagnostic": null,
+        "findings": []
+      },
+      "scores": {
+        "functional": 100.0,
+        "memory": 100.0,
+        "safety": 100.0,
+        "total": 100.0
+      },
+      "execution_time_sec": 0.388,
+      "error_log": null,
+      "weights": {
+        "functional": 0.6,
+        "memory": 0.2,
+        "safety": 0.2
+      },
+      "target_standard": "c99",
+      "effective_standard": "c99",
+      "generation": null,
+      "provenance": {
+        "reference_cache_hit": false,
+        "task_sha256": "e0d8e38ac017a140dafb44659d93e15cc56486d29f04788d4c17d17f0f99ceeb",
+        "candidate_sha256": "75fe4540625a980305994bbb1c47da690c72819b2531f3e72379e6571d98b560",
+        "prompt_sha256": null
+      },
+      "limits": {
+        "max_flash_bytes": 2048,
+        "max_ram_bytes": 0,
+        "timeout_seconds": 5
+      },
+      "candidate_time_sec": 0.38753719999999703,
+      "reference_validation_time_sec": 0.05187680000000228,
+      "footprint_target": "host"
+    },
+    {
+      "task_id": "tier2_debounce_fsm",
+      "tier": 2,
+      "model_name": "baseline",
+      "compiled": true,
+      "test_result": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "all_passed": true,
+        "completed": true,
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:135:test_initial_state:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:136:test_glitch_rejection_on_press:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:137:test_clean_click_event:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:138:test_hold_and_release_event:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:139:test_null_safety:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:140:test_hold_occurs_at_exact_confirmed_press_tick:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:141:test_zero_and_one_thresholds_and_nonzero_input:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:df2c4da0587243f5981074f5be71b0b0:END\n",
+        "output_truncated": false
+      },
+      "size_metrics": {
+        "flash_bytes": 1134,
+        "ram_bytes": 0,
+        "ref_flash_bytes": 1134,
+        "ref_ram_bytes": 0,
+        "measured": true
+      },
+      "safety_metrics": {
+        "error_count": 0,
+        "warning_count": 0,
+        "violations": [],
+        "cppcheck_status": "disabled",
+        "cppcheck_diagnostic": null,
+        "findings": []
+      },
+      "scores": {
+        "functional": 100.0,
+        "memory": 100.0,
+        "safety": 100.0,
+        "total": 100.0
+      },
+      "execution_time_sec": 0.353,
+      "error_log": null,
+      "weights": {
+        "functional": 0.6,
+        "memory": 0.2,
+        "safety": 0.2
+      },
+      "target_standard": "c99",
+      "effective_standard": "c99",
+      "generation": null,
+      "provenance": {
+        "reference_cache_hit": false,
+        "task_sha256": "56a6cf42788072f4a5d8f763fe9b8af0a949105b467429f39393b78d5c15ede3",
+        "candidate_sha256": "2f2623c7abfec0ce13c3d1f3502e843ef7253e4962e798056d52306bf8e9c730",
+        "prompt_sha256": null
+      },
+      "limits": {
+        "max_flash_bytes": 1536,
+        "max_ram_bytes": 128,
+        "timeout_seconds": 5
+      },
+      "candidate_time_sec": 0.3525816000000077,
+      "reference_validation_time_sec": 0.03924299999999903,
+      "footprint_target": "host"
+    },
+    {
+      "task_id": "tier2_fixed_control",
+      "tier": 2,
+      "model_name": "baseline",
+      "compiled": true,
+      "test_result": {
+        "total": 7,
+        "passed": 7,
+        "failed": 0,
+        "ignored": 0,
+        "all_passed": true,
+        "completed": true,
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_init_and_reset_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_q8_proportional_and_signed_truncation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_integral_antiwindup_and_recovery:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_derivative_and_wide_arithmetic:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_integral_limits:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_filter_endpoints_and_extremes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_filter_independent_integer_oracle:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:82e082e8251a417399b0b7d0c6c3b666:END\n",
+        "output_truncated": false
+      },
+      "size_metrics": {
+        "flash_bytes": 941,
+        "ram_bytes": 0,
+        "ref_flash_bytes": 941,
+        "ref_ram_bytes": 0,
+        "measured": true
+      },
+      "safety_metrics": {
+        "error_count": 0,
+        "warning_count": 0,
+        "violations": [],
+        "cppcheck_status": "disabled",
+        "cppcheck_diagnostic": null,
+        "findings": []
+      },
+      "scores": {
+        "functional": 100.0,
+        "memory": 100.0,
+        "safety": 100.0,
+        "total": 100.0
+      },
+      "execution_time_sec": 0.34,
+      "error_log": null,
+      "weights": {
+        "functional": 0.6,
+        "memory": 0.2,
+        "safety": 0.2
+      },
+      "target_standard": "c99",
+      "effective_standard": "c99",
+      "generation": null,
+      "provenance": {
+        "reference_cache_hit": false,
+        "task_sha256": "8a029c491576548951695257aa9fa4fa356a6e69576d14b15b126165361796d1",
+        "candidate_sha256": "8817a58885053fc9c2572d3ab5a5c55d1cbf1316308933152c99acc5c8a2c158",
+        "prompt_sha256": null
+      },
+      "limits": {
+        "max_flash_bytes": 2048,
+        "max_ram_bytes": 128,
+        "timeout_seconds": 5
+      },
+      "candidate_time_sec": 0.3401563999999837,
+      "reference_validation_time_sec": 0.040390800000011495,
+      "footprint_target": "host"
+    },
+    {
+      "task_id": "tier2_tick_timer",
+      "tier": 2,
+      "model_name": "baseline",
+      "compiled": true,
+      "test_result": {
+        "total": 16,
+        "passed": 16,
+        "failed": 0,
+        "ignored": 0,
+        "all_passed": true,
+        "completed": true,
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:188:test_init_resets_all_state:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:189:test_null_arguments:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:190:test_start_records_configuration:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:191:test_zero_interval_preserves_existing_timer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:192:test_one_shot_exact_deadline_fires_once:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:193:test_delayed_one_shot_returns_one:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:194:test_one_shot_across_counter_wrap:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:195:test_periodic_exact_and_repeated_poll:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:196:test_periodic_retains_missed_count_and_phase:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:197:test_periodic_phase_across_wrap:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:198:test_unit_interval_handles_maximum_expiration_count:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:199:test_full_range_intervals_are_supported:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:200:test_cancel_is_idempotent_and_retains_configuration:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:201:test_restart_changes_origin_interval_and_mode:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:202:test_timer_instances_are_independent:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:203:test_interval_origin_boundary_matrix:PASS\r\n-----------------------\r\n16 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:5d5be4e4173c4191ae631044409bdf08:END\n",
+        "output_truncated": false
+      },
+      "size_metrics": {
+        "flash_bytes": 636,
+        "ram_bytes": 0,
+        "ref_flash_bytes": 636,
+        "ref_ram_bytes": 0,
+        "measured": true
+      },
+      "safety_metrics": {
+        "error_count": 0,
+        "warning_count": 0,
+        "violations": [],
+        "cppcheck_status": "disabled",
+        "cppcheck_diagnostic": null,
+        "findings": []
+      },
+      "scores": {
+        "functional": 100.0,
+        "memory": 100.0,
+        "safety": 100.0,
+        "total": 100.0
+      },
+      "execution_time_sec": 0.31,
+      "error_log": null,
+      "weights": {
+        "functional": 0.6,
+        "memory": 0.2,
+        "safety": 0.2
+      },
+      "target_standard": "c99",
+      "effective_standard": "c99",
+      "generation": null,
+      "provenance": {
+        "reference_cache_hit": false,
         "task_sha256": "e6272cbbc9fb32e4c61a2a3f9edeaea25f1df538eabfedf955d27f246ec49b07",
         "candidate_sha256": "625cd1ffd8a746042c6e624a1190cab21ede00ef9efdd94e4ed1fcdd1bd29e6c",
         "prompt_sha256": null
@@ -846,8 +862,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.31528370000069117,
-      "reference_validation_time_sec": 0.03455549999944196,
+      "candidate_time_sec": 0.30987179999999626,
+      "reference_validation_time_sec": 0.03688510000000633,
       "footprint_target": "host"
     },
     {
@@ -862,7 +878,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_legal_window_domain_endpoints_and_rollover:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_legal_window_domain_faults_latch:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_initialization_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_unique_registration_and_all_eight_slots:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_no_tasks_never_refreshes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_all_tasks_refresh_once_and_clear_seen:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_early_fault_latches:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_late_fault_latches:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_starvation_latches_and_cannot_be_cleared_by_checkin:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_window_endpoints_are_inclusive:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_rollover_uses_unsigned_elapsed:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_duplicate_heartbeat_does_not_satisfy_other_task:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_heartbeats_do_not_carry_into_next_window:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_invalid_calls_have_no_side_effects:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_explicit_restart_and_failed_reinitialization:PASS\r\n-----------------------\r\n15 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:8381f6100f8a418db37f65fa714bfb3a:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 1136,
@@ -885,7 +903,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.317,
+      "execution_time_sec": 0.313,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -906,8 +924,8 @@
         "max_ram_bytes": 256,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.3168505000003279,
-      "reference_validation_time_sec": 0.03694900000027701,
+      "candidate_time_sec": 0.31335290000001237,
+      "reference_validation_time_sec": 0.036406599999992295,
       "footprint_target": "host"
     },
     {
@@ -922,7 +940,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_crc_known_vector_and_null:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_full_update_order_and_active_preservation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_power_cut_after_every_phase_keeps_old_image:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_corruption_never_commits:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_error_at_every_hal_operation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_bounds_reinit_and_second_slot:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_valid_lengths_cover_chunk_boundaries_and_maximum:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:fa0a7b9b0b4b4323ac3029aded441512:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 1980,
@@ -945,7 +965,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.322,
+      "execution_time_sec": 0.335,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -966,8 +986,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.321947899999941,
-      "reference_validation_time_sec": 0.034805600000254344,
+      "candidate_time_sec": 0.3347219999999709,
+      "reference_validation_time_sec": 0.04392490000000748,
       "footprint_target": "host"
     },
     {
@@ -982,7 +1002,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:189:test_successful_init:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:190:test_init_invalid_chip_id:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:191:test_init_i2c_bus_error:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:192:test_read_positive_temperature:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:193:test_read_negative_temperature:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:194:test_read_before_init_fails:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:195:test_null_params_safety:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:196:test_temperature_range_and_fractional_values:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:197:test_missing_bus_and_callbacks:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:198:test_all_bus_failure_statuses_are_propagated:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:199:test_failed_reinitialization_invalidates_previous_device:PASS\r\n-----------------------\r\n11 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:dc7935a4f630462b857ba815ec22a165:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 830,
@@ -1005,7 +1027,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.314,
+      "execution_time_sec": 0.339,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1026,8 +1048,8 @@
         "max_ram_bytes": 256,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.3138286000003063,
-      "reference_validation_time_sec": 0.035295399999995425,
+      "candidate_time_sec": 0.33885589999999866,
+      "reference_validation_time_sec": 0.0377572000000157,
       "footprint_target": "host"
     },
     {
@@ -1042,7 +1064,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_exact_sequence_and_upper_address:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_waits_before_wren:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_jedec_and_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_page_split_big_endian_and_payload:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_busy_timeout_and_retry:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_alignment_and_address_range:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_each_hal_error_is_propagated:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_noop_and_invalid_pointers:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:2009db13f1d34e5cbbecaa554f94875e:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 1913,
@@ -1065,7 +1089,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.322,
+      "execution_time_sec": 0.354,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1086,8 +1110,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.3215384000004633,
-      "reference_validation_time_sec": 0.03463050000027579,
+      "candidate_time_sec": 0.3540661000000114,
+      "reference_validation_time_sec": 0.03824449999999047,
       "footprint_target": "host"
     },
     {
@@ -1102,7 +1126,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:100:test_w1c_drives_only_target_bit:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:101:test_priority_overwrite_no_corruption:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:102:test_multiple_irq_priorities_independent:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:103:test_out_of_bounds_handling:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:104:test_null_pointer_safety:PASS\r\n-----------------------\r\n5 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:73c93bdc615047458ec3b841503dfabd:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 462,
@@ -1125,7 +1151,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.316,
+      "execution_time_sec": 0.335,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1146,8 +1172,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.31551609999951324,
-      "reference_validation_time_sec": 0.034443600000486185,
+      "candidate_time_sec": 0.3347844999999836,
+      "reference_validation_time_sec": 0.03884529999999131,
       "footprint_target": "host"
     },
     {
@@ -1162,7 +1188,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_valid_lengths_and_both_halves:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_half_alignment_and_required_callbacks:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_acquire_enters_and_leaves_on_every_valid_path:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_init_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_half_transfer_and_cache_order:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_overrun_does_not_steal_reader:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_invalid_calls_preserve_outputs:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_reinitialization_invalidates_stale_state:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:776fbcbdbec0421fa1cf98b04ffff4d7:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 1590,
@@ -1185,7 +1213,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.314,
+      "execution_time_sec": 0.333,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1206,8 +1234,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.3142735999990691,
-      "reference_validation_time_sec": 0.03492710000045918,
+      "candidate_time_sec": 0.33271560000002864,
+      "reference_validation_time_sec": 0.040342499999979964,
       "footprint_target": "host"
     },
     {
@@ -1222,7 +1250,9 @@
         "ignored": 0,
         "all_passed": true,
         "completed": true,
-        "returncode": 0
+        "returncode": 0,
+        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_zero_capacity_recovers_without_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_valid_frame_and_exact_budget:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_timeout_budget_is_for_whole_frame:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_bad_checksum_preserves_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_io_error_then_recovery:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_frame_length_and_capacity:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_sync_noise_and_max_frame:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_invalid_arguments_do_not_touch_hal:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:67c1e6fbe042461d964b987d392e97ae:END\n",
+        "output_truncated": false
       },
       "size_metrics": {
         "flash_bytes": 760,
@@ -1245,7 +1275,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.308,
+      "execution_time_sec": 0.329,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1266,8 +1296,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.307975599999736,
-      "reference_validation_time_sec": 0.035192600000300445,
+      "candidate_time_sec": 0.3290206000000353,
+      "reference_validation_time_sec": 0.03895739999998682,
       "footprint_target": "host"
     }
   ],

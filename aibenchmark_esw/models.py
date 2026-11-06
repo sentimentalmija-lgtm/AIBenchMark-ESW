@@ -5,6 +5,8 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path, PureWindowsPath
 from typing import Any, Optional
 
+from aibenchmark_esw.targets import supported_target_selector
+
 CATEGORIES = frozenset({'general', 'core_fundamentals', 'fsm_and_protocols', 'device_drivers',
                         'bug_fix_and_safety', 'fixed_point_control', 'flash_management', 'concurrency'})
 
@@ -136,6 +138,8 @@ class TaskConfig:
         for target, override in targets.items():
             if not isinstance(target, str) or not isinstance(override, dict):
                 raise ValueError("Target limits must map target names to limit objects")
+            if not supported_target_selector(target):
+                raise ValueError(f'limits.targets.{target}: unsupported target selector; use a supported target or CPU shorthand')
             _known_fields(override, limit_fields, f'limits.targets.{target}.')
             target_limits[target] = TaskLimits(**{**asdict(limits), **override})
         weights_data = data.get("weights", {})
@@ -195,6 +199,7 @@ class TestResult:
     passed: bool = False
     completed: bool = False
     returncode: Optional[int] = None
+    output_truncated: bool = False
 
 
 @dataclass
@@ -255,6 +260,7 @@ class TaskEvaluationResult:
     stack_usage: Optional[dict[str, Any]] = None
 
     def to_dict(self) -> dict[str, Any]:
+        test_output = self.test_result.output.encode('utf-8')
         return {
             "task_id": self.task_id,
             "tier": self.tier,
@@ -268,6 +274,8 @@ class TaskEvaluationResult:
                 "all_passed": self.test_result.passed,
                 "completed": self.test_result.completed,
                 "returncode": self.test_result.returncode,
+                "output": test_output[:65536].decode('utf-8', errors='ignore'),
+                "output_truncated": self.test_result.output_truncated or len(test_output) > 65536,
             },
             "size_metrics": {
                 "flash_bytes": self.size_metrics.flash_bytes,
