@@ -5,6 +5,8 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path, PureWindowsPath
 from typing import Any, Optional
 
+from aibenchmark_esw.targets import supported_target_selector
+
 CATEGORIES = frozenset({'general', 'core_fundamentals', 'fsm_and_protocols', 'device_drivers',
                         'bug_fix_and_safety', 'fixed_point_control', 'flash_management', 'concurrency'})
 
@@ -136,6 +138,8 @@ class TaskConfig:
         for target, override in targets.items():
             if not isinstance(target, str) or not isinstance(override, dict):
                 raise ValueError("Target limits must map target names to limit objects")
+            if not supported_target_selector(target):
+                raise ValueError(f'limits.targets.{target}: unsupported target selector; use a supported target or CPU shorthand')
             _known_fields(override, limit_fields, f'limits.targets.{target}.')
             target_limits[target] = TaskLimits(**{**asdict(limits), **override})
         weights_data = data.get("weights", {})

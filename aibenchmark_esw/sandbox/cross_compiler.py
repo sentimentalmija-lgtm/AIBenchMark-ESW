@@ -2,7 +2,6 @@
 
 import locale
 import os
-import re
 import shutil
 import subprocess
 import tempfile
@@ -15,12 +14,13 @@ from aibenchmark_esw.sandbox.process_runner import (
     OutputLimitExceeded,
     run_bounded,
 )
+from aibenchmark_esw.targets import supported_target
 
 
 class CrossCompiler:
     def __init__(self, target, compiler=None, timeout=30, max_output_bytes=1048576,
                  isolation="native", memory_limit_bytes=None, runner=None, warnings=False, finding_parser=None):
-        if not re.fullmatch(r"(?:avr:atmega[0-9]+[a-z]*|arm:cortex-m(?:0plus|[0347]|23|33|55|85)|riscv:rv(?:32(?:i|imc|imac|ec)|64(?:gc|imac)))", target):
+        if not supported_target(target):
             raise ValueError("Target must be AVR ATmega, ARM Cortex-M0/M0plus/M3/M4/M7/M23/M33/M55/M85, or RISC-V rv32i/imc/imac/ec/rv64gc/imac")
         self.max_output_bytes, self.isolation, self.memory_limit_bytes = max_output_bytes, isolation, memory_limit_bytes
         self.cancel_event, self.runner = None, runner
