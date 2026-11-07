@@ -85,10 +85,12 @@ def render_junit(results, model_name, metadata=None):
             tag, kind, message = "error", "incomplete", "Test execution did not complete"
         elif tests.failed_tests:
             tag, kind, message = "failure", "functional", f"{tests.failed_tests}/{tests.total_tests} tests failed"
+        elif result.error_log and (not tests.ignored_tests or not result.size_metrics.measured):
+            # Ignored Unity output also populates error_log. Failed object/size
+            # or reference evaluation is recorded as an unmeasured footprint.
+            tag, kind, message = "error", "evaluation", "Evaluation reported an error"
         elif tests.ignored_tests:
             tag, kind, message = "skipped", "ignored", f"{tests.ignored_tests}/{tests.total_tests} tests were ignored"
-        elif result.error_log:
-            tag, kind, message = "error", "evaluation", "Evaluation reported an error"
         elif not BenchmarkReporter._all_tests_passed(result):
             tag, kind, message = "failure", "functional", "Task did not pass every test"
         else:
