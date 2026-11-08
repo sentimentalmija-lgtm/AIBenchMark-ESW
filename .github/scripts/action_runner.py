@@ -5,6 +5,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 
@@ -19,12 +20,11 @@ def install_spec(version, mode, action_path=None, model='baseline'):
     return str(Path(action_path or Path(__file__).resolve().parents[2]).resolve())+extra
 
 
-def build_command(environment):
+def build_command(environment, *, isolate_outputs=False):
     mode=environment.get('INPUT_COMMAND') or 'run'
     if mode not in ('run','eval'):
         raise ValueError('command must be run or eval')
     directory=Path(environment.get('INPUT_OUTPUT_DIRECTORY') or '.aibenchmark-artifacts').resolve()
-    outputs={'json':str(directory/'benchmark.json'),'junit':str(directory/'benchmark.junit.xml')}
     command=[sys.executable,'-m','aibenchmark_esw.cli',mode]
     tasks=environment.get('INPUT_TASKS') or 'tier1_crc16'
     if mode=='run':
@@ -61,6 +61,10 @@ def build_command(environment):
         sys.path.pop(0)
     if any(item.split('=',1)[0] in reserved for item in extra):
         raise ValueError('extra-arguments cannot override dedicated identity, artifact, or control inputs')
+    if isolate_outputs:
+        directory.mkdir(parents=True,exist_ok=True)
+        directory=Path(tempfile.mkdtemp(prefix='run-',dir=directory))
+    outputs={'json':str(directory/'benchmark.json'),'junit':str(directory/'benchmark.junit.xml')}
     command += extra + ['--output',outputs['json'],'--junit-output',outputs['junit']]
     return command,outputs
 
@@ -86,7 +90,7 @@ def main():
         return subprocess.run([sys.executable,'-m','pip','install',spec]).returncode
     if operation=='check':
         return int(os.environ.get('BENCHMARK_EXIT_CODE') or '1')
-    command,outputs=build_command(os.environ)
+    command,outputs=build_command(os.environ,isolate_outputs=True)
     _outputs(outputs)
     raw_code=subprocess.run(command).returncode
     code=128-raw_code if raw_code<0 else raw_code

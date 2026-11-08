@@ -6,6 +6,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from xml.etree import ElementTree as ET
 
 
 def runner():
@@ -17,6 +18,18 @@ def runner():
 
 
 class ConsumerActionTests(unittest.TestCase):
+    def invoke(self, root, name, **inputs):
+        outputs=root/f'{name}-outputs.txt'
+        summary=root/f'{name}-summary.md'
+        environment=dict(os.environ,INPUT_COMMAND='run',INPUT_MODEL='baseline',INPUT_TASKS='tier1_crc16',
+                         INPUT_OUTPUT_DIRECTORY=str(root/'artifacts'),GITHUB_OUTPUT=str(outputs),
+                         GITHUB_STEP_SUMMARY=str(summary),AIBENCHMARK_ESW_CPPCHECK='off')
+        environment.update(inputs)
+        process=subprocess.run([sys.executable,'.github/scripts/action_runner.py','benchmark'],
+                               env=environment,capture_output=True,text=True,timeout=60)
+        values=dict(line.split('=',1) for line in outputs.read_text(encoding='utf-8').splitlines())
+        return process,values,summary
+
     def test_default_run_is_offline_baseline_with_json_junit(self):
         command,outputs=runner().build_command({})
         self.assertIn('run',command)
@@ -44,15 +57,53 @@ class ConsumerActionTests(unittest.TestCase):
     def test_real_offline_baseline_helper_writes_artifacts_and_outputs(self):
         with tempfile.TemporaryDirectory() as directory:
             root=Path(directory)
-            outputs=root/'outputs.txt'
-            environment=dict(os.environ,INPUT_OUTPUT_DIRECTORY=str(root/'artifacts'),GITHUB_OUTPUT=str(outputs),AIBENCHMARK_ESW_CPPCHECK='off')
-            process=subprocess.run([sys.executable,'.github/scripts/action_runner.py','benchmark'],env=environment,capture_output=True,text=True)
+            process,outputs,_=self.invoke(root,'baseline')
             self.assertEqual(process.returncode,0,process.stderr)
-            report=json.loads((root/'artifacts'/'benchmark.json').read_text())
+            report=json.loads(Path(outputs['json']).read_text(encoding='utf-8'))
             self.assertEqual(report['model_name'],'baseline')
             self.assertEqual(report['pass_at_1_pct'],100)
-            self.assertTrue((root/'artifacts'/'benchmark.junit.xml').is_file())
-            self.assertIn('exit-code=0',outputs.read_text())
+            self.assertTrue(Path(outputs['junit']).is_file())
+            self.assertEqual(Path(outputs['json']).parent.parent,(root/'artifacts').resolve())
+            self.assertEqual(outputs['exit-code'],'0')
+
+    def test_failed_new_invocation_cannot_publish_previous_success(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            first,old_outputs,first_summary=self.invoke(root,'first')
+            self.assertEqual(first.returncode,0,first.stderr)
+            old_artifacts={key:Path(old_outputs[key]).read_bytes() for key in ('json','junit')}
+            self.assertIn('100.00',first_summary.read_text(encoding='utf-8'))
+            failed,new_outputs,failed_summary=self.invoke(root,'failed',INPUT_TASKS='no_such_task')
+            self.assertEqual(failed.returncode,1,failed.stderr)
+            self.assertEqual(new_outputs['exit-code'],'1')
+            self.assertEqual(new_outputs['raw-exit-code'],'1')
+            for key,content in old_artifacts.items():
+                self.assertNotEqual(new_outputs[key],old_outputs[key])
+                self.assertFalse(Path(new_outputs[key]).exists())
+                self.assertEqual(Path(old_outputs[key]).read_bytes(),content)
+            self.assertFalse(failed_summary.exists())
+            self.assertIn('Benchmark summary unavailable',failed.stderr)
+
+    def test_new_failure_checkpoint_is_exported_without_old_evidence(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            first,old_outputs,_=self.invoke(root,'first')
+            self.assertEqual(first.returncode,0,first.stderr)
+            candidate=root/'broken.c'
+            candidate.write_text('this is not valid C;\n',encoding='utf-8')
+            failed,new_outputs,summary=self.invoke(root,'failed',INPUT_COMMAND='eval',INPUT_SOLUTION=str(candidate))
+            self.assertEqual(failed.returncode,1,failed.stderr)
+            self.assertEqual(new_outputs['exit-code'],'1')
+            for key in ('json','junit'):
+                self.assertNotEqual(new_outputs[key],old_outputs[key])
+                self.assertTrue(Path(new_outputs[key]).is_file())
+                self.assertTrue(Path(old_outputs[key]).is_file())
+            report=json.loads(Path(new_outputs['json']).read_text(encoding='utf-8'))
+            self.assertFalse(report['tasks'][0]['compiled'])
+            self.assertEqual(report['overall_score'],0)
+            self.assertEqual(ET.parse(new_outputs['junit']).getroot().get('errors'),'1')
+            self.assertIn('Generation or compilation did not succeed',Path(new_outputs['junit']).read_text(encoding='utf-8'))
+            self.assertNotIn('100.00',summary.read_text(encoding='utf-8'))
 
     def test_action_uploads_even_when_benchmark_fails_and_smoke_is_offline(self):
         action=Path('action.yml').read_text()

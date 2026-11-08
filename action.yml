@@ -30,7 +30,7 @@ inputs:
     description: Python version configured for the benchmark
     default: '3.11'
   output-directory:
-    description: Destination for benchmark JSON and JUnit artifacts
+    description: Parent directory for invocation-specific benchmark JSON and JUnit artifacts
     default: .aibenchmark-artifacts
   artifact-name:
     description: Uploaded JSON and JUnit artifact name
@@ -40,10 +40,10 @@ inputs:
     default: '[]'
 outputs:
   json:
-    description: Absolute JSON checkpoint pathname
+    description: Absolute JSON checkpoint pathname for this invocation
     value: ${{ steps.benchmark.outputs.json }}
   junit:
-    description: Absolute JUnit XML pathname
+    description: Absolute JUnit XML pathname for this invocation
     value: ${{ steps.benchmark.outputs.junit }}
   exit-code:
     description: Benchmark status normalized to 128 plus signal for signal termination

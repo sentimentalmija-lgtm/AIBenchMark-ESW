@@ -48,15 +48,24 @@ class TestCIIssueFixes(unittest.TestCase):
         report = BenchmarkReporter.to_json_dict(results, report['model_name'], report['metadata'])
         with TemporaryDirectory() as directory:
             root = Path(directory)
-            (root / 'benchmark.json').write_text(json.dumps(report), encoding='utf-8')
+            (root / 'benchmark.junit.xml').write_text('Previous invocation', encoding='utf-8')
             outputs, summary = root / 'outputs.txt', root / 'summary.md'
+
+            def interrupted_run(command):
+                Path(command[command.index('--output') + 1]).write_text(json.dumps(report), encoding='utf-8')
+                return subprocess.CompletedProcess(command, -9)
+
             with patch.dict(os.environ, {'INPUT_OUTPUT_DIRECTORY': str(root), 'GITHUB_OUTPUT': str(outputs),
                                          'GITHUB_STEP_SUMMARY': str(summary)}), patch.object(sys, 'argv', ['runner', 'benchmark']), \
-                    patch.object(module.subprocess, 'run', return_value=subprocess.CompletedProcess([], -9)):
+                    patch.object(module.subprocess, 'run', side_effect=interrupted_run):
                 self.assertEqual(module.main(), 137)
             self.assertIn('exit-code=137', outputs.read_text(encoding='utf-8'))
             self.assertIn('raw-exit-code=-9', outputs.read_text(encoding='utf-8'))
             self.assertIn('Run status: aborted', summary.read_text(encoding='utf-8'))
+            paths = dict(line.split('=', 1) for line in outputs.read_text(encoding='utf-8').splitlines())
+            self.assertTrue(Path(paths['json']).is_file())
+            self.assertFalse(Path(paths['junit']).exists())
+            self.assertEqual((root / 'benchmark.junit.xml').read_text(encoding='utf-8'), 'Previous invocation')
 
     def test_github_summary_cli_handles_collections_and_escape_labels(self):
         with TemporaryDirectory() as directory:

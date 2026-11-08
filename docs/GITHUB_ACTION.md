@@ -46,4 +46,10 @@ For generation, set a provider-qualified `model` and supply the provider's crede
 
 By default, the action installs its own source revision. `package-version` selects an exact published PyPI version instead; choose a version that supports the requested CLI flags. `python-version` defaults to `3.11`. `output-directory` defaults to `.aibenchmark-artifacts`, and the action exposes absolute `json`, `junit`, and `exit-code` outputs for subsequent steps.
 
+Each invocation writes into a new subdirectory of `output-directory`. Use the
+`json` and `junit` outputs to find its files. Reusing the parent directory preserves
+earlier evidence without uploading or summarizing it as the current run. Failures
+that produce a new checkpoint still upload it; failures before checkpoint creation
+have no report to upload or summarize.
+
 The repository's `Consumer action offline smoke` workflow exercises this composite action with two real references, validates its JSON and JUnit artifacts, and never requests a provider.
