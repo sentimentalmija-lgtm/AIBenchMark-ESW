@@ -139,6 +139,11 @@ class BenchmarkReporter:
                 if not isinstance(active, dict) or 'samples' in active or active_sample is None:
                     raise ValueError('active_report must describe the active pending sample')
                 BenchmarkReporter.from_json_dict(active)
+                active_id = (active.get('metadata') or {}).get('run_id')
+                if (not isinstance(active_id, str) or not active_id.strip() or active_id in sample_ids
+                        or active_id == (data.get('metadata') or {}).get('run_id')):
+                    raise ValueError('active_report run_id must be a nonempty string distinct from '
+                                     'completed sample and collection run IDs')
                 from aibenchmark_esw.metrics.comparison import (
                     validate_collection_conditions,
                 )
