@@ -944,7 +944,7 @@ def cmd_validate_report(args):
         raise ValueError("Specify a report path or --schema")
     report = json.loads(args.results.read_text(encoding="utf-8"))
     validate_report_structure(report)
-    BenchmarkReporter.from_json_dict(report)
+    BenchmarkReporter.from_json_dict(report, strict_summaries=True)
     print("Report structure and consistency: PASS")
     return 0
 

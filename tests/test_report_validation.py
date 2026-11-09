@@ -206,6 +206,41 @@ class TestReportValidation(unittest.TestCase):
                     self.assertEqual(command(args), 1)
                 self.assertIn("Safety score", errors.getvalue())
 
+    def _current_report(self):
+        data = json.loads(Path("results/baseline.json").read_text(encoding="utf-8"))
+        return BenchmarkReporter.to_json_dict(
+            BenchmarkReporter.from_json_dict(data), data["model_name"], data["metadata"])
+
+    def test_validate_report_rejects_contradictory_flat_overall_score(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "flat.json"
+            report = self._current_report()
+            report["overall_score"] = 0
+            path.write_text(json.dumps(report), encoding="utf-8")
+            args = cli.build_parser().parse_args(["validate-report", str(path)])
+            with self.assertRaisesRegex(ValueError, "overall_score disagrees"):
+                cli.cmd_validate_report(args)
+
+    def test_validate_report_rejects_contradictory_pass_at_1_pct(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "flat.json"
+            report = self._current_report()
+            report["pass_at_1_pct"] = 0
+            path.write_text(json.dumps(report), encoding="utf-8")
+            args = cli.build_parser().parse_args(["validate-report", str(path)])
+            with self.assertRaisesRegex(ValueError, "pass_at_1_pct disagrees"):
+                cli.cmd_validate_report(args)
+
+    def test_validate_report_accepts_valid_current_report(self):
+        with TemporaryDirectory() as directory:
+            path = Path(directory) / "valid.json"
+            path.write_text(json.dumps(self._current_report()), encoding="utf-8")
+            args = cli.build_parser().parse_args(["validate-report", str(path)])
+            with redirect_stderr(io.StringIO()) as errors, redirect_stdout(io.StringIO()) as output:
+                self.assertEqual(cli.cmd_validate_report(args), 0)
+            self.assertEqual(errors.getvalue(), "")
+            self.assertIn("PASS", output.getvalue())
+
 
 if __name__ == "__main__":
     unittest.main()

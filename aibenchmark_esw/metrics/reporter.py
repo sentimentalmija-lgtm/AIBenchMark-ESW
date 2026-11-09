@@ -56,7 +56,14 @@ class BenchmarkReporter:
         return result.effective_standard
 
     @staticmethod
-    def from_json_dict(data: dict[str, Any]) -> list[TaskEvaluationResult]:
+    def _expected_flat_summaries(results: list[TaskEvaluationResult]) -> dict[str, float]:
+        return {
+            "overall_score": round(sum(r.scores.total_score for r in results) / max(1, len(results)), 2),
+            "pass_at_1_pct": round(sum(1 for r in results if BenchmarkReporter._all_tests_passed(r)) / max(1, len(results)) * 100.0, 2),
+        }
+
+    @staticmethod
+    def from_json_dict(data: dict[str, Any], *, strict_summaries: bool = False) -> list[TaskEvaluationResult]:
         if not isinstance(data, dict) or not isinstance(data.get("tasks"), list):
             raise ValueError("Results must be an object containing a tasks array")
         version = data.get("schema_version", 1)
@@ -288,6 +295,11 @@ class BenchmarkReporter:
         for field in ('tier_weighted_score', 'tier_weight_policy', 'by_tier', 'by_category'):
             if field in data and data[field] != expected_groups[field]:
                 raise ValueError(field + ' disagrees with task results')
+        if strict_summaries and version == 2:
+            expected_flat = BenchmarkReporter._expected_flat_summaries(results)
+            for field, expected in expected_flat.items():
+                if field in data and data[field] != expected:
+                    raise ValueError(field + ' disagrees with task results')
         return results
 
     @staticmethod
