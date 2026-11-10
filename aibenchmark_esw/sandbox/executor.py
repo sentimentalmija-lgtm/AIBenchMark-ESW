@@ -225,14 +225,15 @@ class ExecutionSandbox:
         if self.sanitizers and not object_only and (compiler_name in ("tcc", "cl", "clang-cl")):
             message = "Sanitizers require a GCC/Clang driver with the requested sanitizer runtime installed"
             return CompilationResult(False, message, error_message="Unsupported sanitizer toolchain")
-        if compiler_name == "cl":
-            if standard == "c99":
+        if compiler_name in ("cl", "clang-cl"):
+            if compiler_name == "cl" and standard == "c99":
                 if not self.allow_standard_fallback:
                     message = ("MSVC does not support strict C99. Use GCC/Clang/TCC or "
                                "--allow-standard-fallback to explicitly evaluate as C11.")
                     return CompilationResult(False, message, error_message="Unsupported C standard")
                 standard = "c11"
-            cmd = [self.compiler_path, "/nologo", "/TC", f"/std:{standard}", "/O1"]
+            standard_flag = f'/clang:-std={standard}' if compiler_name == 'clang-cl' else f'/std:{standard}'
+            cmd = [self.compiler_path, "/nologo", "/TC", standard_flag, "/O1"]
             cmd += [f"/I{directory}" for directory in includes]
             if object_only:
                 cmd += ["/c", f"/Fo{output}"]
