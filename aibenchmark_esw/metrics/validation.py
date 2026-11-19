@@ -122,6 +122,15 @@ def validate_task_result(item, default_model):
             _count(finding["line"], "finding.line")
             if finding["line"] == 0:
                 raise ValueError("finding.line must be positive")
+        if 'compilation_occurrences' in finding:
+            occurrences = finding['compilation_occurrences']
+            if not isinstance(occurrences, list) or not occurrences:
+                raise ValueError('finding.compilation_occurrences must be a nonempty array')
+            for occurrence in occurrences:
+                _object(occurrence, 'compilation occurrence')
+                if occurrence.get('stage') not in ('host-tests', 'footprint-object'):
+                    raise ValueError('Unknown compilation occurrence stage')
+                _name(occurrence.get('file'), 'compilation occurrence.file')
     errors = sum(finding["severity"] == "error" for finding in findings)
     warnings = len(findings) - errors
     if errors > safety.get("error_count", 0) or warnings > safety.get("warning_count", 0):

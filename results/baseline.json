@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
   "metadata": {
-    "run_id": "9db578e1fdd245e88f5a15fafa8cc944",
-    "created_at_utc": "2026-11-17T12:08:10.095869+00:00",
+    "run_id": "437e171edb6246da8aeda59b1180d7b2",
+    "created_at_utc": "2026-11-19T22:56:07.750594+00:00",
     "benchmark_version": "0.1.0",
-    "evaluator_sha256": "afbbbd7a27201569489d5b941e9f97e71cc8fe5a215288017db8a86a38a9b61f",
-    "python_version": "3.11.15",
+    "evaluator_sha256": "d0821de0ae08f144e7909d9aab57475d05eb00646451ed9278a33a9bd24fa7d4",
+    "python_version": "3.14.3",
     "platform": {
       "system": "Windows",
-      "release": "10",
+      "release": "11",
       "machine": "AMD64"
     },
     "compiler": {
@@ -61,7 +61,7 @@
         ]
       }
     },
-    "source_revision": "ed9fef76f521f84f8eb09018d95d1e786b7e27be",
+    "source_revision": "a84534f805dc67efb87e1bd13646201a82205c0a",
     "source_dirty": false,
     "selected_tasks": [
       "tier1_crc16",
@@ -337,7 +337,7 @@
       }
     },
     "run_options": {
-      "compiler": "C:\\Users\\Admin\\scoop\\apps\\tcc\\0.9.27\\tcc\\tcc.exe",
+      "compiler": "C:\\Users\\user\\AppData\\Local\\Temp\\aibench-tcc260\\tcc\\tcc.exe",
       "allow_standard_fallback": false,
       "compile_timeout": 30.0,
       "max_output_bytes": 1048576,
@@ -383,7 +383,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:91:test_standard_test_vector:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:92:test_empty_buffer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:93:test_null_buffer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:94:test_single_byte_and_stepwise_update:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:95:test_all_zeros_and_ones:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:96:test_every_binary_byte_and_streaming_state:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:97:test_lengths_at_and_beyond_uint16_limit:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:72a794f44fe745948f524707c9306bf1:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:91:test_standard_test_vector:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:92:test_empty_buffer:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:93:test_null_buffer:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:94:test_single_byte_and_stepwise_update:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:95:test_all_zeros_and_ones:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:96:test_every_binary_byte_and_streaming_state:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_crc16/tests/test_crc16.c:97:test_lengths_at_and_beyond_uint16_limit:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:9c79493eb96641bda7f8485b0e7f0119:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -407,7 +407,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.292,
+      "execution_time_sec": 1.067,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -428,8 +428,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2924073000003773,
-      "reference_validation_time_sec": 0.03475220000018453,
+      "candidate_time_sec": 1.0665115999998989,
+      "reference_validation_time_sec": 0.01605860000006487,
       "footprint_target": "host"
     },
     {
@@ -445,7 +445,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:119:test_add_ordinary:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:120:test_add_positive_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:121:test_add_negative_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:122:test_add_mixed_extremes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:123:test_sub_ordinary:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:124:test_sub_positive_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:125:test_sub_negative_saturation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:126:test_sub_equal_extremes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:127:test_mul_zero:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:128:test_mul_positive_fractions:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:129:test_mul_signs:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:130:test_mul_negative_one_squared_saturates:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:131:test_mul_extreme_products:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:132:test_mul_truncates_toward_zero:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:133:test_mul_one_raw_unit_boundaries:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:134:test_all_raw_values_obey_identity_and_scaling:PASS\r\n-----------------------\r\n16 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:2351555fbd304468a5fb537e4ae1d488:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:119:test_add_ordinary:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:120:test_add_positive_saturation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:121:test_add_negative_saturation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:122:test_add_mixed_extremes:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:123:test_sub_ordinary:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:124:test_sub_positive_saturation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:125:test_sub_negative_saturation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:126:test_sub_equal_extremes:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:127:test_mul_zero:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:128:test_mul_positive_fractions:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:129:test_mul_signs:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:130:test_mul_negative_one_squared_saturates:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:131:test_mul_extreme_products:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:132:test_mul_truncates_toward_zero:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:133:test_mul_one_raw_unit_boundaries:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_q15_math/tests/test_q15_math.c:134:test_all_raw_values_obey_identity_and_scaling:PASS\r\n-----------------------\r\n16 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:e00f8ecc000c4aa3a41da3c47e6c4253:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -469,7 +469,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.282,
+      "execution_time_sec": 2.744,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -490,8 +490,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.282310000000507,
-      "reference_validation_time_sec": 0.035012299999834795,
+      "candidate_time_sec": 2.7440222999999833,
+      "reference_validation_time_sec": 0.008324399999992238,
       "footprint_target": "host"
     },
     {
@@ -507,7 +507,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:168:test_init_and_empty:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:169:test_push_and_pop_single:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:170:test_fill_to_capacity_and_is_full:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:171:test_fifo_ordering:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:172:test_wrap_around_continuous:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:173:test_null_pointer_safety:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:174:test_non_power_of_two_capacity_rollover:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:175:test_invalid_storage_and_capacity:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:176:test_capacity_one:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:177:test_forbidden_upper_capacities_preserve_storage:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:178:test_capacity_300_fill_drain_and_wrap:PASS\r\n-----------------------\r\n11 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:95792300679248b191b9607b1f20e937:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:168:test_init_and_empty:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:169:test_push_and_pop_single:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:170:test_fill_to_capacity_and_is_full:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:171:test_fifo_ordering:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:172:test_wrap_around_continuous:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:173:test_null_pointer_safety:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:174:test_non_power_of_two_capacity_rollover:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:175:test_invalid_storage_and_capacity:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:176:test_capacity_one:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:177:test_forbidden_upper_capacities_preserve_storage:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier1_ring_buffer/tests/test_ring_buffer.c:178:test_capacity_300_fill_drain_and_wrap:PASS\r\n-----------------------\r\n11 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:577ac0973d6647a186cdc1474aaa10d5:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -531,7 +531,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.288,
+      "execution_time_sec": 1.099,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -552,8 +552,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2877395000004981,
-      "reference_validation_time_sec": 0.03508319999946252,
+      "candidate_time_sec": 1.098909699999922,
+      "reference_validation_time_sec": 0.01036080000005768,
       "footprint_target": "host"
     },
     {
@@ -569,7 +569,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_every_capacity_full_overflow_drain_and_wrap:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_standard_ids_and_little_endian_payload:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_extended_id_boundaries:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_raw_preserves_whole_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_remote_frames_keep_dlc_without_payload:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_zero_and_partial_dlc_zero_unused_bytes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_mask_filter_and_format_matching:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_filters_and_frames:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_queue_initialization_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_fifo_wrap_preserves_order:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_overrun_latches_and_preserves_full_queue:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_empty_pop_preserves_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_dispatch_acceptance_and_rejection:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_dispatch_and_queue_state_are_side_effect_free:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_direct_remote_push_discards_payload:PASS\r\n-----------------------\r\n15 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:1974097a5dca48ebba6f820b98cbe3ef:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_every_capacity_full_overflow_drain_and_wrap:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_standard_ids_and_little_endian_payload:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_extended_id_boundaries:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_raw_preserves_whole_output:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_remote_frames_keep_dlc_without_payload:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_zero_and_partial_dlc_zero_unused_bytes:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_mask_filter_and_format_matching:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_filters_and_frames:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_queue_initialization_validation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_fifo_wrap_preserves_order:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_overrun_latches_and_preserves_full_queue:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_empty_pop_preserves_output:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_dispatch_acceptance_and_rejection:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_invalid_dispatch_and_queue_state_are_side_effect_free:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_can_frame/tests/test_can_frame.c:81:test_direct_remote_push_discards_payload:PASS\r\n-----------------------\r\n15 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:dc797124d5be4f2fadbe8bee1e50c932:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -593,7 +593,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.284,
+      "execution_time_sec": 0.973,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -614,8 +614,8 @@
         "max_ram_bytes": 256,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.28407489999972313,
-      "reference_validation_time_sec": 0.03569950000019162,
+      "candidate_time_sec": 0.9731788999999935,
+      "reference_validation_time_sec": 0.008073899999999412,
       "footprint_target": "host"
     },
     {
@@ -631,7 +631,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:184:test_empty_and_single_byte_vectors:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:185:test_zero_positions_and_mixed_vectors:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:186:test_all_byte_values_known_answer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:187:test_full_block_boundaries_and_canonical_ending:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:188:test_decoder_accepts_full_block_with_optional_empty_group:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:189:test_capacity_failures_preserve_bounds_and_written:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:190:test_null_pointer_contract:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:191:test_malformed_encodings:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:192:test_fixed_seed_roundtrip_and_source_preservation:PASS\r\n-----------------------\r\n9 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:58a5358225654f20a0113f001f140685:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:184:test_empty_and_single_byte_vectors:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:185:test_zero_positions_and_mixed_vectors:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:186:test_all_byte_values_known_answer:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:187:test_full_block_boundaries_and_canonical_ending:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:188:test_decoder_accepts_full_block_with_optional_empty_group:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:189:test_capacity_failures_preserve_bounds_and_written:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:190:test_null_pointer_contract:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:191:test_malformed_encodings:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_cobs_codec/tests/test_cobs_codec.c:192:test_fixed_seed_roundtrip_and_source_preservation:PASS\r\n-----------------------\r\n9 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:18bc40cff7044dbeaa61b076fcb1949a:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -655,7 +655,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.28,
+      "execution_time_sec": 1.019,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -676,8 +676,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.27954959999988205,
-      "reference_validation_time_sec": 0.03492869999990944,
+      "candidate_time_sec": 1.019221899999934,
+      "reference_validation_time_sec": 0.008312100000011924,
       "footprint_target": "host"
     },
     {
@@ -693,7 +693,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:135:test_initial_state:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:136:test_glitch_rejection_on_press:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:137:test_clean_click_event:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:138:test_hold_and_release_event:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:139:test_null_safety:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:140:test_hold_occurs_at_exact_confirmed_press_tick:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:141:test_zero_and_one_thresholds_and_nonzero_input:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:db761c7be3154ae68e19d9bb451bc945:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:135:test_initial_state:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:136:test_glitch_rejection_on_press:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:137:test_clean_click_event:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:138:test_hold_and_release_event:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:139:test_null_safety:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:140:test_hold_occurs_at_exact_confirmed_press_tick:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_debounce_fsm/tests/test_debounce_fsm.c:141:test_zero_and_one_thresholds_and_nonzero_input:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:d7eb048e6ede46ed93c37d3aca971a49:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -717,7 +717,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.277,
+      "execution_time_sec": 0.998,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -738,8 +738,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.27717800000027637,
-      "reference_validation_time_sec": 0.03442639999957464,
+      "candidate_time_sec": 0.9982030999999552,
+      "reference_validation_time_sec": 0.00795349999998507,
       "footprint_target": "host"
     },
     {
@@ -755,7 +755,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_init_and_reset_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_q8_proportional_and_signed_truncation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_integral_antiwindup_and_recovery:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_derivative_and_wide_arithmetic:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_integral_limits:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_filter_endpoints_and_extremes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_filter_independent_integer_oracle:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:b204cc8efd0a4ecaa1100c14b470e539:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_init_and_reset_validation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_q8_proportional_and_signed_truncation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_integral_antiwindup_and_recovery:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_derivative_and_wide_arithmetic:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_integral_limits:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_filter_endpoints_and_extremes:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_fixed_control/tests/test_fixed_control.c:18:test_filter_independent_integer_oracle:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:27f42b1d3a32430e96d0dc68d3443e28:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -779,7 +779,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.28,
+      "execution_time_sec": 0.949,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -800,8 +800,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.28045119999933377,
-      "reference_validation_time_sec": 0.03500940000049013,
+      "candidate_time_sec": 0.9491484000000128,
+      "reference_validation_time_sec": 0.007861199999979362,
       "footprint_target": "host"
     },
     {
@@ -817,7 +817,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:188:test_init_resets_all_state:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:189:test_null_arguments:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:190:test_start_records_configuration:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:191:test_zero_interval_preserves_existing_timer:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:192:test_one_shot_exact_deadline_fires_once:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:193:test_delayed_one_shot_returns_one:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:194:test_one_shot_across_counter_wrap:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:195:test_periodic_exact_and_repeated_poll:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:196:test_periodic_retains_missed_count_and_phase:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:197:test_periodic_phase_across_wrap:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:198:test_unit_interval_handles_maximum_expiration_count:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:199:test_full_range_intervals_are_supported:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:200:test_cancel_is_idempotent_and_retains_configuration:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:201:test_restart_changes_origin_interval_and_mode:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:202:test_timer_instances_are_independent:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:203:test_interval_origin_boundary_matrix:PASS\r\n-----------------------\r\n16 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:ee45a35dccc545deaedc70822d60f145:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:188:test_init_resets_all_state:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:189:test_null_arguments:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:190:test_start_records_configuration:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:191:test_zero_interval_preserves_existing_timer:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:192:test_one_shot_exact_deadline_fires_once:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:193:test_delayed_one_shot_returns_one:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:194:test_one_shot_across_counter_wrap:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:195:test_periodic_exact_and_repeated_poll:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:196:test_periodic_retains_missed_count_and_phase:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:197:test_periodic_phase_across_wrap:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:198:test_unit_interval_handles_maximum_expiration_count:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:199:test_full_range_intervals_are_supported:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:200:test_cancel_is_idempotent_and_retains_configuration:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:201:test_restart_changes_origin_interval_and_mode:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:202:test_timer_instances_are_independent:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_tick_timer/tests/test_tick_timer.c:203:test_interval_origin_boundary_matrix:PASS\r\n-----------------------\r\n16 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:d835ea99697047a583fd273161f4a46b:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -841,7 +841,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.278,
+      "execution_time_sec": 0.937,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -862,8 +862,8 @@
         "max_ram_bytes": 0,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2778064000003724,
-      "reference_validation_time_sec": 0.034890299999460694,
+      "candidate_time_sec": 0.9371094000000539,
+      "reference_validation_time_sec": 0.007878900000036992,
       "footprint_target": "host"
     },
     {
@@ -879,7 +879,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_legal_window_domain_endpoints_and_rollover:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_legal_window_domain_faults_latch:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_initialization_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_unique_registration_and_all_eight_slots:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_no_tasks_never_refreshes:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_all_tasks_refresh_once_and_clear_seen:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_early_fault_latches:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_late_fault_latches:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_starvation_latches_and_cannot_be_cleared_by_checkin:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_window_endpoints_are_inclusive:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_rollover_uses_unsigned_elapsed:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_duplicate_heartbeat_does_not_satisfy_other_task:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_heartbeats_do_not_carry_into_next_window:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_invalid_calls_have_no_side_effects:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_explicit_restart_and_failed_reinitialization:PASS\r\n-----------------------\r\n15 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:243acacb549146c89b26f4d43f45789a:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_legal_window_domain_endpoints_and_rollover:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_legal_window_domain_faults_latch:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_initialization_validation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_unique_registration_and_all_eight_slots:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_no_tasks_never_refreshes:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_all_tasks_refresh_once_and_clear_seen:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_early_fault_latches:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_late_fault_latches:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_starvation_latches_and_cannot_be_cleared_by_checkin:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_window_endpoints_are_inclusive:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_rollover_uses_unsigned_elapsed:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_duplicate_heartbeat_does_not_satisfy_other_task:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_heartbeats_do_not_carry_into_next_window:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_invalid_calls_have_no_side_effects:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier2_windowed_watchdog/tests/test_windowed_watchdog.c:74:test_explicit_restart_and_failed_reinitialization:PASS\r\n-----------------------\r\n15 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:d86cc8bb631447d4b642102c97057e73:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -903,7 +903,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.282,
+      "execution_time_sec": 0.987,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -924,8 +924,8 @@
         "max_ram_bytes": 256,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2815650000002279,
-      "reference_validation_time_sec": 0.0349938999997903,
+      "candidate_time_sec": 0.9874291999999514,
+      "reference_validation_time_sec": 0.009225199999946199,
       "footprint_target": "host"
     },
     {
@@ -941,7 +941,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_crc_known_vector_and_null:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_full_update_order_and_active_preservation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_power_cut_after_every_phase_keeps_old_image:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_corruption_never_commits:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_error_at_every_hal_operation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_bounds_reinit_and_second_slot:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_valid_lengths_cover_chunk_boundaries_and_maximum:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:1ce7ce0b4b134a7590990498422c8a89:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_crc_known_vector_and_null:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_full_update_order_and_active_preservation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_power_cut_after_every_phase_keeps_old_image:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_corruption_never_commits:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_error_at_every_hal_operation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_bounds_reinit_and_second_slot:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_flash_update/tests/test_flash_update.c:49:test_valid_lengths_cover_chunk_boundaries_and_maximum:PASS\r\n-----------------------\r\n7 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:6ef0536e72d24654898003bd4a8460fa:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -965,7 +965,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.286,
+      "execution_time_sec": 0.949,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -986,8 +986,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.28566329999921436,
-      "reference_validation_time_sec": 0.035026700000344135,
+      "candidate_time_sec": 0.9494609999999284,
+      "reference_validation_time_sec": 0.009483799999998155,
       "footprint_target": "host"
     },
     {
@@ -1003,7 +1003,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:189:test_successful_init:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:190:test_init_invalid_chip_id:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:191:test_init_i2c_bus_error:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:192:test_read_positive_temperature:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:193:test_read_negative_temperature:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:194:test_read_before_init_fails:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:195:test_null_params_safety:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:196:test_temperature_range_and_fractional_values:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:197:test_missing_bus_and_callbacks:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:198:test_all_bus_failure_statuses_are_propagated:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:199:test_failed_reinitialization_invalidates_previous_device:PASS\r\n-----------------------\r\n11 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:e835e9fa19374ee0a8460d1c85b00b88:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:189:test_successful_init:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:190:test_init_invalid_chip_id:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:191:test_init_i2c_bus_error:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:192:test_read_positive_temperature:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:193:test_read_negative_temperature:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:194:test_read_before_init_fails:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:195:test_null_params_safety:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:196:test_temperature_range_and_fractional_values:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:197:test_missing_bus_and_callbacks:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:198:test_all_bus_failure_statuses_are_propagated:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_i2c_sensor/tests/test_i2c_sensor.c:199:test_failed_reinitialization_invalidates_previous_device:PASS\r\n-----------------------\r\n11 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:fb96229d38d44908a28acd5c0eb94cb3:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -1027,7 +1027,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.285,
+      "execution_time_sec": 0.913,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1048,8 +1048,8 @@
         "max_ram_bytes": 256,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2851280000004408,
-      "reference_validation_time_sec": 0.0383626999991975,
+      "candidate_time_sec": 0.9131318999999394,
+      "reference_validation_time_sec": 0.008337600000004386,
       "footprint_target": "host"
     },
     {
@@ -1065,7 +1065,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_exact_sequence_and_upper_address:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_waits_before_wren:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_jedec_and_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_page_split_big_endian_and_payload:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_busy_timeout_and_retry:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_alignment_and_address_range:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_each_hal_error_is_propagated:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_noop_and_invalid_pointers:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:150a69cc89874dc58022419940960e33:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_exact_sequence_and_upper_address:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_waits_before_wren:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_jedec_and_validation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_page_split_big_endian_and_payload:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_busy_timeout_and_retry:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_erase_alignment_and_address_range:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_each_hal_error_is_propagated:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier3_spi_flash/tests/test_spi_flash.c:36:test_noop_and_invalid_pointers:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:7e7131db820346cdb2b436c6a7d649dd:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -1089,7 +1089,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.293,
+      "execution_time_sec": 0.913,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1110,8 +1110,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2931656999999177,
-      "reference_validation_time_sec": 0.03482059999987541,
+      "candidate_time_sec": 0.9134811000000127,
+      "reference_validation_time_sec": 0.008855200000084551,
       "footprint_target": "host"
     },
     {
@@ -1127,7 +1127,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:100:test_w1c_drives_only_target_bit:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:101:test_priority_overwrite_no_corruption:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:102:test_multiple_irq_priorities_independent:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:103:test_out_of_bounds_handling:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:104:test_null_pointer_safety:PASS\r\n-----------------------\r\n5 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:30fd12c3a3a54d31b146c82882a9f404:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:100:test_w1c_drives_only_target_bit:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:101:test_priority_overwrite_no_corruption:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:102:test_multiple_irq_priorities_independent:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:103:test_out_of_bounds_handling:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_bitmask_fix/tests/test_irq_manager.c:104:test_null_pointer_safety:PASS\r\n-----------------------\r\n5 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:6492592d5dc744b880f6c24c1b874529:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -1151,7 +1151,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.279,
+      "execution_time_sec": 0.951,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1172,8 +1172,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2787754999999379,
-      "reference_validation_time_sec": 0.03467530000034458,
+      "candidate_time_sec": 0.9511461999999256,
+      "reference_validation_time_sec": 0.007802000000083353,
       "footprint_target": "host"
     },
     {
@@ -1189,7 +1189,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_valid_lengths_and_both_halves:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_half_alignment_and_required_callbacks:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_acquire_enters_and_leaves_on_every_valid_path:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_init_validation:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_half_transfer_and_cache_order:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_overrun_does_not_steal_reader:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_invalid_calls_preserve_outputs:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_reinitialization_invalidates_stale_state:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:14edc847daec4b059aff33d3e985b03d:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_valid_lengths_and_both_halves:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_half_alignment_and_required_callbacks:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_acquire_enters_and_leaves_on_every_valid_path:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_init_validation:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_half_transfer_and_cache_order:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_overrun_does_not_steal_reader:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_invalid_calls_preserve_outputs:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_dma_buffer/tests/test_dma_buffer.c:77:test_reinitialization_invalidates_stale_state:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:ebfa1ac557b246f7a60d60c642725a47:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -1213,7 +1213,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.28,
+      "execution_time_sec": 0.967,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1234,8 +1234,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.27986260000034235,
-      "reference_validation_time_sec": 0.03564550000010058,
+      "candidate_time_sec": 0.9674945000000434,
+      "reference_validation_time_sec": 0.010048699999970268,
       "footprint_target": "host"
     },
     {
@@ -1251,7 +1251,7 @@
         "all_passed": true,
         "completed": true,
         "returncode": 0,
-        "output": "C:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_zero_capacity_recovers_without_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_valid_frame_and_exact_budget:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_timeout_budget_is_for_whole_frame:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_bad_checksum_preserves_output:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_io_error_then_recovery:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_frame_length_and_capacity:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_sync_noise_and_max_frame:PASS\r\nC:/Source/AI/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_invalid_arguments_do_not_touch_hal:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:44eafb5cd4954fc9b74901decb1a0175:END\n",
+        "output": "D:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_zero_capacity_recovers_without_output:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_valid_frame_and_exact_budget:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_timeout_budget_is_for_whole_frame:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_bad_checksum_preserves_output:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_io_error_then_recovery:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_frame_length_and_capacity:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_sync_noise_and_max_frame:PASS\r\nD:/Source/Temp/Think/AIBenchMark-ESW/tasks/tier4_uart_frame_fix/tests/test_uart_frame_fix.c:24:test_invalid_arguments_do_not_touch_hal:PASS\r\n-----------------------\r\n8 Tests 0 Failures 0 Ignored\r\nOK\r\n\nAIBenchMark-ESW:f577c4e065fc4f42933e20c236e71fbd:END\n",
         "output_truncated": false
       },
       "size_metrics": {
@@ -1275,7 +1275,7 @@
         "safety": 100.0,
         "total": 100.0
       },
-      "execution_time_sec": 0.288,
+      "execution_time_sec": 0.906,
       "error_log": null,
       "weights": {
         "functional": 0.6,
@@ -1296,8 +1296,8 @@
         "max_ram_bytes": 128,
         "timeout_seconds": 5
       },
-      "candidate_time_sec": 0.2882478000010451,
-      "reference_validation_time_sec": 0.034808999999768275,
+      "candidate_time_sec": 0.9062645000001339,
+      "reference_validation_time_sec": 0.00833019999993212,
       "footprint_target": "host"
     }
   ],

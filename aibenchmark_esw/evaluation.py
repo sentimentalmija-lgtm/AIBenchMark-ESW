@@ -20,6 +20,25 @@ from aibenchmark_esw.sandbox.size_analyzer import SizeAnalyzer
 from aibenchmark_esw.sandbox.static_analyzer import StaticAnalyzer
 
 
+def _compiler_findings(test_findings, object_findings):
+    findings = [dict(finding) for finding in test_findings]
+    for finding in object_findings:
+        duplicate = next((previous for previous in findings[:len(test_findings)]
+            if finding.get('source_origin') == previous.get('source_origin') == 'candidate'
+            and finding.get('line') is not None
+            and all(finding.get(key) == previous.get(key)
+                    for key in ('engine', 'rule_id', 'severity', 'message', 'line'))), None)
+        if duplicate is not None:
+            occurrences = duplicate.setdefault('compilation_occurrences', [
+                {'stage': 'host-tests', 'file': duplicate['file']}])
+            occurrence = {'stage': 'footprint-object', 'file': finding['file']}
+            if occurrence not in occurrences:
+                occurrences.append(occurrence)
+        elif finding not in findings:
+            findings.append(dict(finding))
+    return findings
+
+
 def failed_evaluation(task: TaskConfig, model_name: str, error: str) -> TaskEvaluationResult:
     return TaskEvaluationResult(
         task.id, task.tier, model_name, False,
@@ -85,7 +104,7 @@ def evaluate_task(task: TaskConfig, solution_code: str, reference_code: Optional
                                                        comp.effective_standard or task.target_standard,
                                                        executor=executor)
         if executor.warnings:
-            findings = comp.findings + [finding for finding in object_findings if finding not in comp.findings]
+            findings = _compiler_findings(comp.findings, object_findings)
             safety.findings.extend(findings)
             safety.warning_count += sum(finding["severity"] == "warning" for finding in findings)
             safety.violations.extend(finding["message"] for finding in findings)

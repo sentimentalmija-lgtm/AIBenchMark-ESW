@@ -255,6 +255,12 @@ every contributing sample. Every file export protects source inputs and output a
 ## Optional execution and dataset checks
 
 `--warnings` adds recorded compiler flags and scored warning findings.
+An identical candidate warning (rule, severity, message and source line) from
+host-test and footprint-object compilation contributes one penalty, including
+when the footprint uses a cross target. The retained finding records both
+temporary paths and stages in `compilation_occurrences`. Stage/target-specific
+messages remain separate; diagnostics with ambiguous source identity are not
+merged across paths.
 `--extended-safety-rules` opts into bounded embedded heuristics (stdio/control
 flow/VLA/recursion/math); these are diagnostic checks, not formal MISRA
 certification. `--static-analysis-timeout` bounds cppcheck and records timeout
