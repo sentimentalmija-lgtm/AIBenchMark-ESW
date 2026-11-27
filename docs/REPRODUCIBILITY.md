@@ -248,6 +248,11 @@ Aggregation rejects unfinished collections and expands complete collections.
 
 Replay checks every saved source's hash before grading, creates fresh evaluator/
 task/toolchain provenance and a new run ID, and records the origin run ID.
+It restores recorded seeded task variants and verifies task fingerprints when
+available. If the origin used a private test overlay, supply the matching suite
+with `replay --heldout-tests PATH`. Use `replay --regrade` to grade the verified
+sources against the selected unvaried dataset under a deliberately changed
+contract. The replay report records that choice.
 Missing or truncated candidates are explicit zero slots; historical generation
 data is labelled origin evidence rather than new provider spending. Replay runs
 cannot be counted as independent model samples. HTML exports contain their own

@@ -159,6 +159,29 @@ def prepare_task_variants(tasks, variant_seed=None, heldout_tests=None):
         yield prepared, evidence
 
 
+@contextmanager
+def prepare_replay_tasks(tasks, recorded, *, heldout_tests=None, regrade=False):
+    """Reconstruct the recorded task contract from the current dataset."""
+    if regrade or recorded is None:
+        if heldout_tests is not None:
+            raise ValueError('Replay --heldout-tests requires an origin report with a held-out suite and no --regrade')
+        yield tasks
+        return
+    if not isinstance(recorded, dict) or recorded.get('variant_version') != VARIANT_VERSION:
+        raise ValueError('Unsupported replay variant version; use a compatible evaluator or explicitly --regrade')
+    heldout_used = recorded.get('heldout_tests_used')
+    if not isinstance(heldout_used, bool):
+        raise ValueError('Invalid replay variant evidence: heldout_tests_used must be a boolean')
+    if heldout_used and heldout_tests is None:
+        raise ValueError('Replay requires the original private suite via --heldout-tests, or explicitly --regrade')
+    if not heldout_used and heldout_tests is not None:
+        raise ValueError('Replay --heldout-tests requires an origin report with a held-out suite')
+    with prepare_task_variants(tasks, recorded.get('variant_seed'), heldout_tests) as (prepared, evidence):
+        if json.dumps(evidence, sort_keys=True) != json.dumps(recorded, sort_keys=True):
+            raise ValueError('Recorded variant evidence does not match regenerated parameters or the held-out suite')
+        yield prepared
+
+
 def reference_similarity(candidate, reference):
     """Exact normalized token match is a warning, never evidence of memorization.
 

@@ -194,6 +194,8 @@ def build_parser() -> argparse.ArgumentParser:
     replay_p.add_argument("--solutions", "--solutions-dir", dest="solutions", type=Path, required=True)
     replay_p.add_argument("--output", type=Path, required=True)
     replay_p.add_argument("--jobs", type=_positive_int, default=1)
+    replay_p.add_argument("--heldout-tests", type=Path, help="Original private test overlay, if recorded")
+    replay_p.add_argument("--regrade", action="store_true", help="Grade against the selected unvaried dataset instead of the recorded task contract")
     doctor_p = subparsers.add_parser("doctor", help="Check local tools without provider requests")
     doctor_p.add_argument("--check-references", action="store_true")
     doctor_p.add_argument("--tier", type=int, choices=[1, 2, 3, 4])
@@ -864,17 +866,25 @@ def cmd_trend(args):
 
 def cmd_replay(args):
     from aibenchmark_esw.replay import replay_candidates
+    from aibenchmark_esw.task_variants import prepare_replay_tasks
     origin = json.loads(args.results.read_text(encoding="utf-8"))
     old_results = BenchmarkReporter.from_json_dict(origin)
     loader = DatasetLoader(getattr(args, "tasks_root", None))
+    origin_metadata = origin.get('metadata') or {}
     tasks = []
-    for result in old_results:
-        task = loader.get_task(result.task_id)
+    for task_id in origin_metadata.get('selected_tasks') or [result.task_id for result in old_results]:
+        task = loader.get_task(task_id)
         if task is None:
-            raise ValueError(f"Replay task not found: {result.task_id}")
-        tasks.append(_target_task(task, args))
-    report = replay_candidates(origin, args.solutions, tasks, _new_executor(args), _new_analyzer(args),
-        output=args.output, protected_files=[args.results], extra_outputs=[args.junit_output], jobs=args.jobs)
+            raise ValueError(f"Replay task not found: {task_id}")
+        tasks.append(task)
+    heldout = getattr(args, 'heldout_tests', None)
+    regrade = getattr(args, 'regrade', False)
+    validate_output_paths([args.output, args.junit_output], protected_roots=_input_roots(loader) + ([heldout] if heldout else []))
+    with prepare_replay_tasks(tasks, origin_metadata.get('contamination_controls'),
+                              heldout_tests=heldout, regrade=regrade) as prepared:
+        report = replay_candidates(origin, args.solutions, [_target_task(task, args) for task in prepared],
+            _new_executor(args), _new_analyzer(args), output=args.output,
+            protected_files=[args.results], extra_outputs=[args.junit_output], jobs=args.jobs, regrade=regrade)
     results = BenchmarkReporter.from_json_dict(report)
     _write_junit(args, results, report["model_name"], report["metadata"])
     print(BenchmarkReporter.generate_cli_table(results, report["model_name"], report["metadata"]))

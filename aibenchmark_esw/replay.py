@@ -14,7 +14,7 @@ from aibenchmark_esw.report_io import atomic_write_json
 
 
 def replay_candidates(origin_report, solutions_dir, tasks, executor, analyzer=None, *,
-                      output=None, protected_files=(), extra_outputs=(), jobs=1):
+                      output=None, protected_files=(), extra_outputs=(), jobs=1, regrade=False):
     """Evaluate an explicit source set, checkpointing every completed task.
 
     ``tasks`` supplies the selected configurations, including external datasets.
@@ -22,6 +22,8 @@ def replay_candidates(origin_report, solutions_dir, tasks, executor, analyzer=No
     and ambiguous complete files fail preflight; missing/truncated sources keep
     zero-score slots. ``protected_files`` includes the origin report pathname.
     Generation evidence lives exclusively under each task's origin provenance.
+    Prepare the origin's transformed tasks first when replaying a variant.
+    Use ``regrade`` to evaluate the same sources against a different contract.
     """
     original = BenchmarkReporter.from_json_dict(origin_report)
     if isinstance(jobs, bool) or not isinstance(jobs, int) or jobs < 1:
@@ -34,7 +36,8 @@ def replay_candidates(origin_report, solutions_dir, tasks, executor, analyzer=No
     original_map = {result.task_id: result for result in original}
     if len(task_map) != len(tasks) or set(task_map) != set(original_map):
         raise ValueError('Replay task configurations must match the complete origin task set')
-    selected = (origin_report.get('metadata') or {}).get('selected_tasks') or [result.task_id for result in original]
+    origin_metadata = origin_report.get('metadata') or {}
+    selected = origin_metadata.get('selected_tasks') or [result.task_id for result in original]
     tasks = [task_map[task_id] for task_id in selected]
     directory = Path(solutions_dir)
     if not directory.is_dir():
@@ -74,7 +77,17 @@ def replay_candidates(origin_report, solutions_dir, tasks, executor, analyzer=No
             sources[task.id] = source
 
     metadata = collect_run_metadata(tasks, executor, static_analyzer=analyzer)
-    metadata.update(run_mode='replay', origin_run_id=(origin_report.get('metadata') or {}).get('run_id'),
+    recorded_contract = origin_metadata.get('contamination_controls')
+    recorded_fingerprints = origin_metadata.get('task_fingerprints')
+    if regrade:
+        metadata['replay_regrade'] = True
+    elif recorded_contract is not None or recorded_fingerprints is not None:
+        if not isinstance(recorded_fingerprints, dict) or recorded_fingerprints != metadata['task_fingerprints']:
+            raise ValueError('Replay task fingerprints do not match the origin; restore the original task inputs '
+                             'or explicitly --regrade')
+        if recorded_contract is not None:
+            metadata['contamination_controls'] = copy.deepcopy(recorded_contract)
+    metadata.update(run_mode='replay', origin_run_id=origin_metadata.get('run_id'),
                     origin_model_name=origin_report.get('model_name'), run_status='running',
                     pending_tasks=[task.id for task in tasks])
     model = origin_report.get('model_name', 'unknown')
