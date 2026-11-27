@@ -9,6 +9,13 @@ claim that unmeasured provider billing was zero: unknown usage and cost remain
 unknown in reports. Exhausted transient errors remain pending even when subsequent
 tasks succeed, and `--resume` retries those slots without repeating successes.
 
+On a rate-limit error, `Retry-After` can extend the configured exponential
+backoff up to the 60-second per-retry cap. The client reads delay seconds
+(including fractional seconds) or an HTTP date from the response headers,
+then checks exception headers if needed. Missing, invalid, or expired advice
+leaves the exponential delay in place. Each scheduled retry records its planned
+delay in `retry_delay_seconds` and the policy that set it in `retry_delay_source`.
+
 Dry runs and live runs construct the identical initial prompt and use the same
 local LiteLLM pricing lookup: qualified model, bare model, then `get_model_info`.
 Dry runs never call completion. Missing optional provider support or pricing is

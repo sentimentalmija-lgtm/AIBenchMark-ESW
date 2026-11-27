@@ -51,6 +51,8 @@ class TestProviderIssueFixes(unittest.TestCase):
             if len(calls) < 3:
                 error = RuntimeError('limited')
                 error.status_code = 429
+                if len(calls) == 1:
+                    error.response = N(headers={'Retry-After': '35'})
                 raise error
             return response('int f(void){return 1;}')
         provider.completion.side_effect = complete
@@ -66,9 +68,63 @@ class TestProviderIssueFixes(unittest.TestCase):
             client.generate_solution([{'role': 'user', 'content': 'task'}])
         self.assertEqual([a['latency_seconds'] for a in client.last_generation['attempts']], [.25] * 3)
         self.assertEqual(client.last_generation['latency_seconds'], .75)
-        self.assertEqual(client.last_generation['elapsed_wall_seconds'], 30.75)
+        self.assertEqual(client.last_generation['elapsed_wall_seconds'], 55.75)
+        self.assertEqual([a['retry_delay_source'] for a in client.last_generation['attempts'][:2]],
+                         ['retry-after', 'exponential-backoff'])
         self.assertAlmostEqual(budget.spent, 5e-6)
         self.assertIsNone(client.last_generation['cost_usd'])  # Budget policy does not fabricate billing evidence.
+
+    def test_retry_after_delay_forms_and_bounds(self):
+        for status, header, where, delay, source in (
+            (429, '30', 'response', 30, 'retry-after'),
+            (429, '3.5', 'error', 3.5, 'retry-after'),
+            (429, 'Thu, 01 Jan 1970 00:00:25 GMT', 'response', 15, 'retry-after'),
+            (429, 'Thu, 01 Jan 1970 00:00:05 GMT', 'response', 2, 'exponential-backoff'),
+            (429, '3600', 'response', 60, 'retry-after'),
+            (429, '0', 'response', 2, 'exponential-backoff'),
+            (429, '-1', 'response', 2, 'exponential-backoff'),
+            (429, 'NaN', 'response', 2, 'exponential-backoff'),
+            (429, 'Infinity', 'response', 2, 'exponential-backoff'),
+            (429, '9' * 400, 'response', 2, 'exponential-backoff'),
+            (429, 'not a date', 'response', 2, 'exponential-backoff'),
+            (503, '30', 'response', 2, 'exponential-backoff'),
+        ):
+            with self.subTest(status=status, header=header, where=where):
+                error = RuntimeError('provider error')
+                error.status_code = status
+                carrier = error if where == 'error' else N()
+                carrier.headers = {'rEtRy-AfTeR': header}
+                if where == 'response':
+                    error.response = carrier
+                provider = Mock(model_cost={})
+                provider.completion.side_effect = [error, response('int f(void){return 1;}')]
+                client = LLMClient('mock', max_retries=1, retry_backoff_seconds=2)
+                with patch.dict(sys.modules, {'litellm': provider}), \
+                        patch('aibenchmark_esw.llm.client.time.time', return_value=10), \
+                        patch('aibenchmark_esw.llm.client.time.sleep') as wait:
+                    client.generate_solution([{'role': 'user', 'content': 'task'}])
+                wait.assert_called_once_with(delay)
+                attempts = client.last_generation['attempts']
+                self.assertEqual(len(attempts), 2)
+                self.assertEqual(attempts[0]['retry_delay_seconds'], delay)
+                self.assertEqual(attempts[0]['retry_delay_source'], source)
+                self.assertNotIn('retry_delay_seconds', attempts[1])
+
+    def test_retry_after_wait_can_be_cancelled(self):
+        error = RuntimeError('limited')
+        error.status_code = 429
+        error.response = N(headers={'Retry-After': '30'})
+        provider = Mock(model_cost={})
+        provider.completion.side_effect = error
+        client = LLMClient('mock', max_retries=1)
+        event = Mock()
+        event.is_set.return_value = False
+        event.wait.return_value = True
+        client.cancel_event = event
+        with patch.dict(sys.modules, {'litellm': provider}), self.assertRaisesRegex(InterruptedError, 'cancelled'):
+            client.generate_solution([{'role': 'user', 'content': 'task'}])
+        event.wait.assert_called_once_with(30)
+        self.assertEqual(len(client.last_generation['attempts']), 1)
 
     def test_ambiguous_timeout_retains_conservative_charge(self):
         provider = Mock()

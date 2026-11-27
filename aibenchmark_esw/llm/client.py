@@ -3,6 +3,9 @@ import copy
 import math
 import re
 import time
+from collections.abc import Mapping
+from datetime import timezone
+from email.utils import parsedate_to_datetime
 from typing import Any, Optional
 
 from aibenchmark_esw.llm.costs import (
@@ -15,6 +18,8 @@ from aibenchmark_esw.llm.costs import (
     valid_cost,
 )
 from aibenchmark_esw.sandbox.c_source import mask_noncode
+
+_MAX_RETRY_DELAY_SECONDS = 60.0
 
 
 def is_fatal_provider_error(error):
@@ -40,6 +45,32 @@ def _pre_response_error(error):
     return (isinstance(error, ConnectionError)
             or type(error).__name__ in {'RateLimitError', 'APIConnectionError', 'ServiceUnavailableError'}
             or (isinstance(status, int) and (status in (408, 429) or 500 <= status < 600)))
+
+
+def _rate_limit_retry_after(error: Exception) -> Optional[float]:
+    if getattr(error, 'status_code', None) != 429 and type(error).__name__ != 'RateLimitError':
+        return None
+    for carrier in (getattr(error, 'response', None), error):
+        headers = getattr(carrier, 'headers', None)
+        if not isinstance(headers, Mapping):
+            continue
+        for name, value in headers.items():
+            if not isinstance(name, str) or name.lower() != 'retry-after' or not isinstance(value, str):
+                continue
+            value = value.strip()
+            try:
+                if re.fullmatch(r'[0-9]+(?:\.[0-9]+)?', value):
+                    delay = float(value)
+                else:
+                    date = parsedate_to_datetime(value)
+                    if date.tzinfo is None:
+                        date = date.replace(tzinfo=timezone.utc)
+                    delay = date.timestamp() - time.time()
+            except (TypeError, ValueError, OverflowError, OSError):
+                continue
+            if math.isfinite(delay) and delay >= 0:
+                return min(delay, _MAX_RETRY_DELAY_SECONDS)
+    return None
 
 
 class ContextWindowError(ValueError):
@@ -187,7 +218,7 @@ class LLMClient:
                       "cost_usd": None, "budget_charge_usd": reservation, "usage": None}
             self.last_generation["attempts"].append(record)
             start = time.perf_counter()
-            delay = None
+            delay: Optional[float] = None
             settlement = None
             try:
                 response = provider.completion(**kwargs)
@@ -227,8 +258,14 @@ class LLMClient:
                 elif not is_transient_provider_error(error) or is_fatal_provider_error(error) or attempt >= self.max_retries:
                     raise
                 else:
-                    delay = min(60.0, self.retry_backoff_seconds * 2 ** attempt)
+                    backoff: float = min(_MAX_RETRY_DELAY_SECONDS, self.retry_backoff_seconds * 2 ** attempt)
+                    advice = _rate_limit_retry_after(error)
+                    if advice is not None and advice > backoff:
+                        delay, source = advice, 'retry-after'
+                    else:
+                        delay, source = backoff, 'exponential-backoff'
                     record["retry_delay_seconds"] = delay
+                    record["retry_delay_source"] = source
             finally:
                 if self.budget is not None:
                     charge = record['cost_usd'] if record['cost_usd'] is not None else settlement
