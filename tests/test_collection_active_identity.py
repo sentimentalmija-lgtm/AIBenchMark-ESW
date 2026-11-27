@@ -1,16 +1,21 @@
 import copy
+import io
 import json
 import subprocess
 import sys
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 from tempfile import TemporaryDirectory
+from types import SimpleNamespace
 from xml.etree import ElementTree as ET
 
 from test_aggregation import fixture_report
 from test_collection_exports import collection
 
 from aibenchmark_esw.metrics.reporter import BenchmarkReporter
+from aibenchmark_esw.resume import load_resume
+from aibenchmark_esw.sampling import run_samples
 
 MISSING = object()
 INVALID_IDS = (('completed sample', 'done'), ('collection', 'collection'), ('missing', MISSING),
@@ -40,6 +45,89 @@ def with_active_id(report, run_id):
 
 
 class TestCollectionActiveIdentity(unittest.TestCase):
+    def setup_resume(self, directory, saved, sidecar):
+        saved['metadata']['created_at_utc'] = '2026-10-15T00:00:00Z'
+        output = Path(directory) / 'report.json'
+        output.write_text(json.dumps(saved), encoding='utf-8')
+        child_path = Path(str(output) + '.samples') / 'sample-0002.json'
+        child_path.parent.mkdir()
+        child_path.write_text(json.dumps(sidecar), encoding='utf-8')
+        args = SimpleNamespace(samples=2, pass_k=None, _explicit_options=set(), output=output, resume=output,
+                               save_solutions=None, _sampling_task_ids=['one'], junit_output=None,
+                               system_prompt_file=None)
+        return args, output, child_path
+
+    def test_resume_starts_unstarted_sample_despite_stale_completed_sidecar(self):
+        saved = collection([fixture_report(100, 'done')], status='interrupted')
+        with TemporaryDirectory() as directory:
+            args, output, _ = self.setup_resume(directory, saved, fixture_report(100, 'old-campaign'))
+
+            def run_once(child_args):
+                self.assertIsNone(child_args.resume)
+                child = fixture_report(100, 'fresh-sample')
+                child_args.output.write_text(json.dumps(child), encoding='utf-8')
+                child_args._sample_checkpoint_callback(child)
+                return 0
+
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(run_samples(args, saved, run_once, []), 0)
+            resumed = json.loads(output.read_text(encoding='utf-8'))
+        self.assertEqual([sample['metadata']['run_id'] for sample in resumed['samples']], ['done', 'fresh-sample'])
+
+    def test_resume_rejects_mismatched_active_sidecar_before_replacing_files(self):
+        saved = active_collection()
+        with TemporaryDirectory() as directory:
+            args, output, child_path = self.setup_resume(directory, saved, fixture_report(100, 'old-campaign'))
+            before = output.read_bytes(), child_path.read_bytes()
+
+            def run_once(child_args):
+                load_resume(child_args)
+                self.fail('A mismatched active child was loaded')
+
+            with self.assertRaisesRegex(ValueError, 'Active sample checkpoint.*run_id'):
+                run_samples(args, saved, run_once, [])
+            self.assertEqual((output.read_bytes(), child_path.read_bytes()), before)
+
+    def test_resume_rejects_legacy_active_sidecar_without_a_recorded_id(self):
+        saved = active_collection()
+        sidecar = saved['sampling'].pop('active_report')
+        with TemporaryDirectory() as directory:
+            args, output, child_path = self.setup_resume(directory, saved, sidecar)
+            before = output.read_bytes(), child_path.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'no recorded run_id'):
+                run_samples(args, saved, lambda _: self.fail('Unbound child was started'), [])
+            self.assertEqual((output.read_bytes(), child_path.read_bytes()), before)
+
+    def test_resume_recovers_matching_child_that_finished_before_wrapper(self):
+        saved = active_collection()
+        with TemporaryDirectory() as directory:
+            args, output, child_path = self.setup_resume(directory, saved, fixture_report(100, 'active'))
+
+            def run_once(child_args):
+                self.assertEqual(child_args.resume, child_path)
+                child = load_resume(child_args)
+                child_args._sample_checkpoint_callback(child)
+                intermediate = json.loads(output.read_text(encoding='utf-8'))['sampling']
+                self.assertEqual(intermediate['active_sample'], 1)
+                self.assertEqual(intermediate['active_report']['metadata']['run_id'], 'active')
+                return 0
+
+            with redirect_stdout(io.StringIO()):
+                self.assertEqual(run_samples(args, saved, run_once, []), 0)
+            resumed = json.loads(output.read_text(encoding='utf-8'))
+        self.assertEqual([sample['metadata']['run_id'] for sample in resumed['samples']], ['done', 'active'])
+        self.assertIsNone(resumed['sampling']['active_sample'])
+        self.assertNotIn('active_report', resumed['sampling'])
+
+    def test_resume_does_not_adopt_stale_sidecar_when_fresh_child_writes_nothing(self):
+        saved = collection([fixture_report(100, 'done')], status='interrupted')
+        with TemporaryDirectory() as directory:
+            args, output, _ = self.setup_resume(directory, saved, fixture_report(100, 'old-campaign'))
+            before = output.read_bytes()
+            with self.assertRaisesRegex(ValueError, 'Sample did not produce a checkpoint'):
+                run_samples(args, saved, lambda child_args: 1, [])
+            self.assertEqual(output.read_bytes(), before)
+
     def run_cli(self, *arguments):
         return subprocess.run([sys.executable, '-m', 'aibenchmark_esw.cli', *map(str, arguments)],
                               capture_output=True, text=True, timeout=30)

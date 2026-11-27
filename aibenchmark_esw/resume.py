@@ -70,6 +70,9 @@ def load_resume(args):
     report = json.loads(path.read_text(encoding="utf-8"))
     results = BenchmarkReporter.from_json_dict(report)
     metadata = report.get("metadata") or {}
+    expected_sample = getattr(args, '_sample_resume_run_id', None)
+    if expected_sample is not None and metadata.get('run_id') != expected_sample:
+        raise ValueError(f'Active sample checkpoint {path} has a different run_id; restore the matching .samples file')
     if (not isinstance(metadata.get("run_id"), str) or not metadata["run_id"].strip()
             or metadata.get("run_status") not in ("running", "interrupted", "aborted", "completed")):
         raise ValueError("Resume requires an identified checkpoint with explicit run status")

@@ -91,37 +91,56 @@ def run_samples(args, saved, run_once, protected_roots):
                 wrapper["metadata"]["cost_budget"] = args._budget_guard.snapshot()
             wrapper["samples"] = samples
             from aibenchmark_esw.metrics.measurements import measurement_summary
-            measured_reports = samples + ([child] if child["metadata"]["run_status"] != "completed" else [])
+            measured_reports = samples + ([child] if active_sample is not None else [])
             wrapper["generation_summary"] = measurement_summary(
                 [result for sample in measured_reports for result in BenchmarkReporter.from_json_dict(sample)])
             wrapper["sampling"] = {"requested": n, "completed": len(samples), "pending": pending,
                                    "pass_k": ks, "statistics": sampling_statistics(samples, ks), "active_sample": active_sample}
-            if child['metadata']['run_status'] != 'completed':
+            if active_sample is not None:
                 wrapper['sampling']['active_report'] = copy.deepcopy(child)
             BenchmarkReporter.from_json_dict(wrapper)
             if args.output:
                 atomic_write_json(args.output, wrapper)
 
         interrupted = aborted = child_failed = False
-        for index in list(pending):
+        resume_index = active_sample
+        order = list(pending)
+        if resume_index is not None:
+            order.remove(resume_index)
+            order.insert(0, resume_index)
+        for index in order:
             child_args = copy.copy(args)
             child_args.samples, child_args.pass_k = 1, None
             child_args.output, child_args.junit_output = sample_paths[index], None
-            if saved and active_sample == index and not resume_paths[index].is_file():
-                raise ValueError(f"Pending sample checkpoint missing: {resume_paths[index]}; restore the .samples directory before resuming")
-            child_args.resume = resume_paths[index] if saved and resume_paths[index].is_file() else None
+            child_args.resume = None
+            if index == resume_index:
+                active = saved['sampling'].get('active_report') or {}
+                run_id = (active.get('metadata') or {}).get('run_id')
+                if not isinstance(run_id, str) or not run_id.strip():
+                    raise ValueError('Active sample checkpoint has no recorded run_id; restore a collection checkpoint '
+                                     'with an embedded active report or start a separate collection')
+                if not resume_paths[index].is_file():
+                    raise ValueError(f"Pending sample checkpoint missing: {resume_paths[index]}; restore the .samples directory before resuming")
+                child_args.resume = resume_paths[index]
+                child_args._sample_resume_run_id = run_id
             child_args._explicit_options = set(args._explicit_options) - {"--output", "--resume", "--samples", "--pass-k"}
             child_args._explicit_options.add("--output")
-            child_args._sample_checkpoint_callback = lambda child: checkpoint(child,
-                child["metadata"]["run_status"] if child["metadata"]["run_status"] != "completed" else "running")
+            child = None
+
+            def record_checkpoint(report):
+                nonlocal child
+                child = report
+                status = report['metadata']['run_status']
+                checkpoint(report, 'running' if status == 'completed' else status)
+
+            child_args._sample_checkpoint_callback = record_checkpoint
             if args.save_solutions:
                 child_args.save_solutions = Path(args.save_solutions) / f"sample-{index + 1:04d}"
             active_sample = index
             code = run_once(child_args)
             child_failed = child_failed or code != 0
-            if not sample_paths[index].is_file():
+            if child is None:
                 raise ValueError("Sample did not produce a checkpoint")
-            child = json.loads(sample_paths[index].read_text(encoding="utf-8"))
             status = child["metadata"]["run_status"]
             if status == "completed":
                 samples.append(child)

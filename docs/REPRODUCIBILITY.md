@@ -238,8 +238,12 @@ The wrapper's ordinary task table represents its first completed sample;
 are descriptive and unreliable for small samples; they are not ranking proof.
 Temperature zero warns about possibly redundant samples. Per-sample checkpoints
 live beside the collection in `<output>.samples/`; save that folder when moving
-an interrupted collection. Completed samples are retained; resume reruns only
-pending samples/tasks. Each sample's saved C files have a separate directory.
+an interrupted collection. Resume retains completed samples and checks the active
+sample file against the run ID embedded in the collection before resuming it.
+Pending samples that have never started run fresh, even if a file already exists
+at their path. For older collections without an embedded active run ID, restore a
+collection checkpoint that records it or start a separate collection. Each
+sample's saved C files have a separate directory.
 Aggregation rejects unfinished collections and expands complete collections.
 
 Replay checks every saved source's hash before grading, creates fresh evaluator/
